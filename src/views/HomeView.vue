@@ -9,6 +9,7 @@
               @touchstart.stop="handlerTouchstart"
               @touchmove="handlerTouchmove"
               @touchend="handlerTouchend"
+              @click="manageVisible = true"
             >
               <img class="logo" src="../assets/logo.png" />
             </div>
@@ -168,20 +169,19 @@
       }
       .welcome {
         margin-left: 15px;
-        width: 739px;
+        width: calc(100vw - 60px - 15px - 80px);
         height: 80px;
         background: white;
         img {
           display: block;
-          width: 100%;
           height: 100%;
         }
       }
     }
     .company-content {
       margin-top: 30px;
-      width: 834px;
-      height: 349px;
+      width: calc(100vw - 60px);
+      height: calc(100vh - 60px - 80px - 30px);
       background-color: white;
       img {
         display: block;

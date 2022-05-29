@@ -37,7 +37,7 @@ module.exports = defineConfig({
           // installerHeaderIcon: './build/icons/aaa.ico', // 安装时头部图标
           createDesktopShortcut: true, // 创建桌面图标
           createStartMenuShortcut: true, // 创建开始菜单图标
-          shortcutName: 'I便笺', // 图标名称
+          shortcutName: '全景图', // 图标名称
         },
         extraResources: ['./extra-resources'],
       },

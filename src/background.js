@@ -16,6 +16,7 @@ async function createWindow() {
   const win = new BrowserWindow({
     width: 894,
     height: 519,
+    // frame: false,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
@@ -35,6 +36,8 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
+  // 关闭菜单栏
+  // Menu.setApplicationMenu(null)
 }
 
 // Quit when all windows are closed.

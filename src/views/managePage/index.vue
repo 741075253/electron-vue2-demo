@@ -12,20 +12,40 @@
         <el-aside width="150px">
           <div class="menu">
             <div class="menu-cell">资源管理</div>
-            <div class="menu-cell" level="2" @click="changePage('VideoManage')">
+            <div
+              class="menu-cell"
+              :class="{ active: pageName === 'VideoManage' }"
+              level="2"
+              @click="changePage('VideoManage')"
+            >
               视频管理
             </div>
-            <div class="menu-cell" level="2" @click="changePage('ImgManage')">
+            <div
+              class="menu-cell"
+              :class="{ active: pageName === 'ImgManage' }"
+              level="2"
+              @click="changePage('ImgManage')"
+            >
               图片管理
             </div>
-            <div class="menu-cell" level="2" @click="changePage('FileManage')">
+            <div
+              class="menu-cell"
+              :class="{ active: pageName === 'FileManage' }"
+              level="2"
+              @click="changePage('FileManage')"
+            >
               文件管理
             </div>
           </div>
 
           <div class="menu">
             <div class="menu-cell">电子签名</div>
-            <div class="menu-cell" level="2" @click="changePage('SignManage')">
+            <div
+              class="menu-cell"
+              :class="{ active: pageName === 'SignManage' }"
+              level="2"
+              @click="changePage('SignManage')"
+            >
               签名管理
             </div>
           </div>
@@ -109,10 +129,11 @@
       color: #396ced;
       font-weight: bold;
       font-size: 16px;
+      cursor: pointer;
       &[level='2'] {
         margin-left: 20px;
       }
-      &.menu-cell-active {
+      &.active {
         background: #e6e6e6;
       }
       & + .menu-cell {
