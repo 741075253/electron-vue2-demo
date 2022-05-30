@@ -1,1 +1,14 @@
-[{"file":"测试文档 - 副本 (3).docx","type":"file"},{"file":"测试文档 - 副本 (2).docx","type":"file"}]
+[
+  {
+    "id": 0,
+    "imgUrl": "E:\\workspace\\electron-vue2-demo\\extra-resources\\posters\\1 - 副本.mp4.jpg",
+    "file": "1 - 副本.mp4",
+    "fileName": "1 - 副本",
+    "isAdd": false,
+    "path": "E:\\workspace\\electron-vue2-demo\\extra-resources\\video\\1 - 副本.mp4",
+    "name": "1 - 副本",
+    "duration": "00:52",
+    "current": 0,
+    "type": "video"
+  }
+]

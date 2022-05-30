@@ -36,12 +36,12 @@ contextBridge.exposeInMainWorld('electronApi', {
     }
     return Promise.resolve(fs.readdirSync(src))
   },
-  saveBase64Poster: (data, file) => {
+  saveBase64Poster: (data, file, dirName) => {
     try {
-      const raw = data.replace(/^data:image\/jpeg;base64,/, '')
+      const raw = data.replace(/^data:image\/(jpeg|png|jpg);base64,/, '')
       const buffer = Buffer.from(raw, 'base64')
 
-      const temp = path.join(getExtraResourcesPath('./posters'))
+      const temp = path.join(getExtraResourcesPath(dirName))
       if (!fs.existsSync(temp)) {
         fs.mkdirSync(temp, { recursive: true })
       }

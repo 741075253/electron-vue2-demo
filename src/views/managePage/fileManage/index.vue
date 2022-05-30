@@ -8,20 +8,20 @@
           </div>
           <p class="title">{{ item.fileName }}</p>
           <div class="btn-group">
-            <el-button type="text" @click="addBanner(item.file, 'only')">
+            <el-button type="text" @click="addBanner(item, 'only')">
               播放当前
             </el-button>
             <el-button
               v-if="!item.isAdd"
               type="text"
-              @click="addBanner(item.file, 'add', index)"
+              @click="addBanner(item, 'add', index)"
             >
               加入轮播
             </el-button>
             <el-button
               v-else
               type="text"
-              @click="addBanner(item.file, 'delete', index)"
+              @click="addBanner(item, 'delete', index)"
             >
               移除轮播
             </el-button>
@@ -97,6 +97,7 @@
       },
       getList() {
         this.loading = true
+        const baseUrl = window.electronApi.getUrl('./file')
         window.electronApi.getDir('./file').then((files) => {
           this.loading = false
           if (files) {
@@ -113,6 +114,7 @@
                 fileName,
                 isAdd,
                 file,
+                path: baseUrl + '/' + file,
               }
             })
             this.total = files.length
@@ -125,6 +127,9 @@
         this.fileList = this.pageList[this.currentPage - 1]
       },
       addBanner(file, type = 'add', index) {
+        if (file) {
+          delete file.imgUrl
+        }
         const url = './api/banner-queue.json'
         let msg = ''
         let status = ''
@@ -134,7 +139,7 @@
           status = '设置'
           param = [
             {
-              file,
+              ...file,
               type: 'file',
             },
           ]
@@ -143,7 +148,7 @@
           msg = '是否确定移除轮播'
           status = '移除'
           for (let i = 0; i < param.length; i++) {
-            if (param[i].file == file) {
+            if (param[i].file == file.file) {
               param.splice(i, 1)
               break
             }
@@ -153,7 +158,7 @@
           status = '加入'
           msg = '是否确定加入轮播'
           param.push({
-            file,
+            ...file,
             type: 'file',
           })
         }
@@ -194,5 +199,5 @@
   }
 </script>
 <style scoped lang="scss">
-  @import url('@/style/list.scss');
+  @import '@/style/list.scss';
 </style>

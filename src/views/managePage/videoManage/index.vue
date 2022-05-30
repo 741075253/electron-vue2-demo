@@ -3,26 +3,26 @@
     <template v-if="pageList.length">
       <div class="list-cells">
         <div class="list-cell" v-for="(item, index) in fileList" :key="item.id">
-          <div class="img-container">
-            <!-- <video :src="item.url" :poster="item.imgUrl"></video> -->
-            <img :src="item.imgUrl" alt="" />
+          <div class="video-container">
+            <img :src="item.imgUrl" />
+            <p class="time">{{ item.duration }}</p>
           </div>
           <p class="title">{{ item.fileName }}</p>
           <div class="btn-group">
-            <el-button type="text" @click="addBanner(item.file, 'only')">
+            <el-button type="text" @click="addBanner(item, 'only')">
               播放当前
             </el-button>
             <el-button
               v-if="!item.isAdd"
               type="text"
-              @click="addBanner(item.file, 'add', index)"
+              @click="addBanner(item, 'add', index)"
             >
               加入轮播
             </el-button>
             <el-button
               v-else
               type="text"
-              @click="addBanner(item.file, 'delete', index)"
+              @click="addBanner(item, 'delete', index)"
             >
               移除轮播
             </el-button>
@@ -79,7 +79,6 @@
             fileName: getFileName(file),
           }
         })
-        console.log('banner', data)
       },
       getBannerQueueList() {
         window.electronApi.readJson('./api/banner-queue.json').then((data) => {
@@ -90,32 +89,34 @@
       },
       getList() {
         this.loading = true
-        window.electronApi.getDir('./video').then((files) => {
+        window.electronApi.getDir('./video').then(async (files) => {
           this.loading = false
           if (files) {
-            const pageList = files.map((file, index) => {
-              const list = file.split('.')
-              // const imgUrl = imgOpt[list.splice(list.length - 1)] || ''
-              const fileName = list.join('.')
+            const pageList = []
+            for (let i = 0; i < files.length; i++) {
+              const file = files[i]
+              const fileName = getFileName(file)
               const isAdd = this.bannerOriginList.some(
                 (item) => item.file === file
               )
-              let imgUrl = ''
               const url = window.electronApi.getUrl('./video/' + file)
-              const data = getVideoInfo(fileName, url)
-              console.log(data)
-              imgUrl = window.electronApi.saveBase64Poster(data.poster, file)
-              console.log(imgUrl)
-              return {
-                id: index,
+              let imgUrl = ''
+              const data = await getVideoInfo(fileName, url)
+              imgUrl = window.electronApi.saveBase64Poster(
+                data.poster,
+                file,
+                './posters'
+              )
+              delete data.poster
+              pageList.push({
+                id: i,
                 imgUrl,
+                file,
                 fileName,
                 isAdd,
-                file,
-                url,
-              }
-            })
-            console.log(pageList)
+                ...data,
+              })
+            }
             this.total = files.length
             this.pageList = parserPageList(pageList)
             this.getPageData()
@@ -135,8 +136,8 @@
           status = '设置'
           param = [
             {
-              file,
-              type: 'file',
+              ...file,
+              type: 'video',
             },
           ]
         }
@@ -144,7 +145,7 @@
           msg = '是否确定移除轮播'
           status = '移除'
           for (let i = 0; i < param.length; i++) {
-            if (param[i].file == file) {
+            if (param[i].file == file.file) {
               param.splice(i, 1)
               break
             }
@@ -154,8 +155,8 @@
           status = '加入'
           msg = '是否确定加入轮播'
           param.push({
-            file,
-            type: 'file',
+            ...file,
+            type: 'video',
           })
         }
         this.$msgbox({
@@ -195,5 +196,5 @@
   }
 </script>
 <style scoped lang="scss">
-  @import url('@/style/list.scss');
+  @import '@/style/list.scss';
 </style>
