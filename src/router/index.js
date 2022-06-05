@@ -8,6 +8,11 @@ const routes = [
   {
     path: '/',
     name: 'home',
+    redirect: '/home',
+  },
+  {
+    path: '/home',
+    name: 'home',
     component: HomeView,
   },
   {
@@ -21,9 +26,45 @@ const routes = [
   {
     path: '/displayResource',
     name: 'displayResource',
+  },
+  {
+    path: '/displayResource/imgPreview',
+    name: 'imgPreview',
     component: () =>
       import(
-        /* webpackChunkName: "resource" */ '../views/displayResource/index.vue'
+        /* webpackChunkName: "sign" */ '../views/displayResource/imgPreview.vue'
+      ),
+  },
+  {
+    path: '/displayResource/filePreview',
+    name: 'filePreview',
+    component: () =>
+      import(
+        /* webpackChunkName: "sign" */ '../views/displayResource/filePreview/index.vue'
+      ),
+  },
+  {
+    path: '/displayResource/filePreviewList',
+    name: 'filePreviewList',
+    component: () =>
+      import(
+        /* webpackChunkName: "sign" */ '../views/displayResource/filePreview/list.vue'
+      ),
+  },
+  {
+    path: '/displayResource/videoPreview',
+    name: 'videoPreview',
+    component: () =>
+      import(
+        /* webpackChunkName: "sign" */ '../views/displayResource/videoPreview/index.vue'
+      ),
+  },
+  {
+    path: '/displayResource/videoPreviewList',
+    name: 'videoPreviewList',
+    component: () =>
+      import(
+        /* webpackChunkName: "sign" */ '../views/displayResource/videoPreview/list.vue'
       ),
   },
   {

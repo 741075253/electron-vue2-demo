@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, dialog } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const path = require('path')
@@ -11,6 +11,14 @@ protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } },
 ])
 
+async function handleDialogOpen(event, opt) {
+  const { canceled, filePaths } = await dialog.showOpenDialog(opt)
+  if (canceled) {
+    return
+  } else {
+    return filePaths[0]
+  }
+}
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
@@ -26,7 +34,6 @@ async function createWindow() {
       preload: path.join(__dirname, 'preload.js'),
     },
   })
-
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
@@ -67,6 +74,7 @@ app.on('ready', async () => {
       console.error('Vue Devtools failed to install:', e.toString())
     }
   }
+  ipcMain.handle('dialog:openDialog', handleDialogOpen)
   createWindow()
 })
 

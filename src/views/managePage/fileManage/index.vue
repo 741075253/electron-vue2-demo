@@ -171,7 +171,7 @@
           type: 'warning',
           callback: (action) => {
             if (action === 'confirm') {
-              window.electronApi.writeJson(url, param, (error) => {
+              window.electronApi.writeJson(url, param).then((error) => {
                 if (error) {
                   this.$Message.error(status + '失败，请重试!')
                 } else {

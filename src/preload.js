@@ -1,8 +1,8 @@
-const { contextBridge } = require('electron')
+const { contextBridge, ipcRenderer } = require('electron')
 const jsonFile = require('jsonfile')
 const fs = require('fs')
 const path = require('path')
-
+const fsp = fs.promises
 contextBridge.exposeInMainWorld('electronApi', {
   readJson: async (url) => {
     const src = getExtraResourcesPath(url)
@@ -12,18 +12,52 @@ contextBridge.exposeInMainWorld('electronApi', {
     const file = await jsonFile.readFileSync(src)
     return Promise.resolve(file)
   },
-  writeJson: (url, data, callback) => {
-    jsonFile.writeFile(getExtraResourcesPath(url), data, (error) => {
-      callback(error)
-    })
+  writeJson: async (url, data) => {
+    try {
+      return await jsonFile.writeFileSync(getExtraResourcesPath(url), data, {
+        spaces: 2,
+      })
+    } catch (err) {
+      return err
+    }
   },
-  readFile: async (url) => {
-    const src = getExtraResourcesPath(url)
+  readFile: async (url, isAbsolute) => {
+    let src = url
+    if (!isAbsolute) {
+      src = getExtraResourcesPath(url)
+    }
     if (!fs.existsSync(src)) {
       return Promise.resolve(false)
     }
     const file = await fs.readFileSync(src)
     return Promise.resolve(file)
+  },
+  removeFile: (url) => {
+    if (!fs.existsSync(url)) {
+      return false
+    } else {
+      // 删除成功返回undefined
+      return fs.unlinkSync(url)
+    }
+  },
+  copyFile: async (sourceDirPath, destDirPath, filename) => {
+    const sourceFilePath = path.join(sourceDirPath, filename)
+    const destFilePath = path.join(destDirPath, filename)
+    try {
+      await fsp.access(sourceFilePath, fs.constants.R_OK)
+      await fsp.access(destDirPath, fs.constants.W_OK)
+      await fsp.copyFile(sourceFilePath, destFilePath)
+
+      return true
+    } catch (ex) {
+      if (ex.errno === -2)
+        console.error(`File "${sourceFilePath}" doesn't exist.`)
+      else if (ex.errno === -13)
+        console.error(`Could not access "${path.resolve(destDirPath)}"`)
+      else
+        console.error(`Could not copy "${sourceFilePath}" to "${destDirPath}"`)
+      return false
+    }
   },
   getUrl: (url) => {
     return getExtraResourcesPath(url)
@@ -52,6 +86,9 @@ contextBridge.exposeInMainWorld('electronApi', {
     } catch {
       return ''
     }
+  },
+  openDialog: (opt) => {
+    return ipcRenderer.invoke('dialog:openDialog', opt)
   },
 })
 

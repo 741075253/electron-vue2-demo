@@ -1,14 +1,18 @@
 [
   {
     "id": 0,
-    "imgUrl": "E:\\workspace\\electron-vue2-demo\\extra-resources\\posters\\1 - 副本.mp4.jpg",
-    "file": "1 - 副本.mp4",
-    "fileName": "1 - 副本",
+    "fileName": "图片",
     "isAdd": false,
-    "path": "E:\\workspace\\electron-vue2-demo\\extra-resources\\video\\1 - 副本.mp4",
-    "name": "1 - 副本",
-    "duration": "00:52",
-    "current": 0,
-    "type": "video"
+    "file": "图片.docx",
+    "path": "E:\\workspace\\electron-vue2-demo\\extra-resources\\file/图片.docx",
+    "type": "file"
+  },
+  {
+    "id": 1,
+    "fileName": "展厅软件浏览界面及功能设计（524更新）",
+    "isAdd": false,
+    "file": "展厅软件浏览界面及功能设计（524更新）.docx",
+    "path": "E:\\workspace\\electron-vue2-demo\\extra-resources\\file/展厅软件浏览界面及功能设计（524更新）.docx",
+    "type": "file"
   }
 ]

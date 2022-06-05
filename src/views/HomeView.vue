@@ -24,10 +24,7 @@
       </swiper-slide>
       <swiper-slide>
         <div class="resource">
-          <img
-            src="../assets/images/2.jpg"
-            @click="toPage('/displayResource')"
-          />
+          <img src="../assets/images/2.jpg" @click="handleResourceClick(1)" />
         </div>
       </swiper-slide>
       <swiper-slide>
@@ -87,6 +84,18 @@
           pass: '',
         },
         formLabelWidth: '120px',
+        resource: {
+          // 党风廉建
+          1: {
+            type: '',
+            list: '',
+          },
+          // 内控案防
+          2: {
+            type: '',
+            list: '',
+          },
+        },
       }
     },
     computed: {
@@ -138,8 +147,43 @@
         }
         this.toPage('/managePage')
       },
+      getResource() {
+        window.electronApi.readJson('./api/banner-queue.json').then((res) => {
+          console.log(res)
+          if (res && res.length) {
+            this.resource[1] = {
+              type: res[0].type,
+              list: res,
+            }
+          }
+        })
+      },
+      handleResourceClick(name) {
+        const { type, list } = this.resource[name]
+        this.$store.commit('setResourceList', list)
+        let path = ''
+        if (type === 'img') {
+          path = '/displayResource/imgPreview'
+        } else if (type === 'video') {
+          path = '/displayResource/videoPreviewList'
+          if (list.length === 1) {
+            path = '/displayResource/videoPreview'
+          }
+        } else if (type === 'file') {
+          path = '/displayResource/filePreviewList'
+          if (list.length === 1) {
+            path = '/displayResource/filePreview'
+          }
+        }
+        console.log(path, this.$store.state.resourceList)
+        this.toPage(path)
+      },
+    },
+    mounted() {
+      this.getResource()
     },
     beforeDestroy() {
+      this.swiper.destroy()
       this.clearTimer()
     },
   }
