@@ -15,7 +15,7 @@ module.exports = defineConfig({
       preload: 'src/preload.js',
       // nodeIntegration: true,
       builderOptions: {
-        productName: 'I便笺',
+        productName: '全景图',
         appId: 'com.inotes.heiyehk',
         copyright: 'heiyehk',
         compression: 'store', // "store" | "normal"| "maximum" 打包压缩情况(store 相对较快)，store 39749kb, maximum 39186kb
@@ -23,8 +23,8 @@ module.exports = defineConfig({
         //   output: 'build' // 输出文件夹
         // },
         win: {
-          // icon: 'xxx/icon.ico',
-          target: ['nsis', 'zip'],
+          icon: 'public/icon.png',
+          // target: ['nsis', 'zip'],
         },
         nsis: {
           oneClick: false, // 一键安装

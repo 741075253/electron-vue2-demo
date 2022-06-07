@@ -29,7 +29,12 @@
       </swiper-slide>
       <swiper-slide>
         <div class="sign">
-          <img src="../assets/images/3.jpg" @click="toPage('/signLeader')" />
+          <img src="../assets/images/3.jpg" @click="handleResourceClick(2)" />
+        </div>
+      </swiper-slide>
+      <swiper-slide>
+        <div class="sign">
+          <img src="../assets/images/4.png" @click="toPage('/signLeader')" />
         </div>
       </swiper-slide>
     </swiper>
@@ -148,10 +153,19 @@
         this.toPage('/managePage')
       },
       getResource() {
-        window.electronApi.readJson('./api/banner-queue.json').then((res) => {
+        window.electronApi.readJson('./api/dflz-banner.json').then((res) => {
           console.log(res)
           if (res && res.length) {
             this.resource[1] = {
+              type: res[0].type,
+              list: res,
+            }
+          }
+        })
+        window.electronApi.readJson('./api/nkaf-banner.json').then((res) => {
+          console.log(res)
+          if (res && res.length) {
+            this.resource[2] = {
               type: res[0].type,
               list: res,
             }

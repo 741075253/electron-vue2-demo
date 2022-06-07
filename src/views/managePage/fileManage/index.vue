@@ -55,6 +55,7 @@
   import wordImg from '../../../assets/images/word.png'
   import excelImg from '../../../assets/images/excel.png'
   import pptImg from '../../../assets/images/ppt.png'
+  import { typeOpt } from '../util'
   const imgOpt = {
     docx: wordImg,
     pptx: pptImg,
@@ -62,8 +63,19 @@
   }
   export default {
     name: 'fileManage',
+    props: {
+      type: {
+        type: String,
+        default: '1',
+      },
+    },
     data() {
+      const typeObj = typeOpt[this.type || '1']
+      const apiUrl = './api/' + typeObj.api
+      const dirUrl = './' + typeObj.dirName + '/file'
       return {
+        apiUrl, // 轮播相对路径
+        dirUrl, // 文件相对路径
         loading: false,
         total: 0,
         currentPage: 1,
@@ -89,7 +101,7 @@
         console.log('banner', data)
       },
       getBannerQueueList() {
-        window.electronApi.readJson('./api/banner-queue.json').then((data) => {
+        window.electronApi.readJson(this.apiUrl).then((data) => {
           if (data && data.length && data[0].type === 'file') {
             this.parseBanner(data)
           }
@@ -97,8 +109,8 @@
       },
       getList() {
         this.loading = true
-        const baseUrl = window.electronApi.getUrl('./file')
-        window.electronApi.getDir('./file').then((files) => {
+        const baseUrl = window.electronApi.getUrl(this.dirUrl)
+        window.electronApi.getDir(this.dirUrl).then((files) => {
           this.loading = false
           if (files) {
             const pageList = files.map((file, index) => {
@@ -130,7 +142,7 @@
         if (file) {
           delete file.imgUrl
         }
-        const url = './api/banner-queue.json'
+        const url = this.apiUrl
         let msg = ''
         let status = ''
         let param = this.bannerOriginList

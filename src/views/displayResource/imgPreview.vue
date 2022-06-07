@@ -2,8 +2,8 @@
   <div class="img">
     <el-button type="primary" @click="toPage('/home')">返回</el-button>
     <swiper :options="swiperOption" ref="swiper">
-      <swiper-slide v-for="(src, index) in sourceList" :key="index">
-        <img :src="src" />
+      <swiper-slide v-for="(src, index) in resourceList" :key="index">
+        <img :src="src.path" />
       </swiper-slide>
     </swiper>
   </div>
@@ -22,6 +22,7 @@
       const resourceList = this.$store.state.resourceList
       let isLoop = resourceList && resourceList.length
       return {
+        resourceList,
         swiperOption: {
           resourceList: resourceList,
           loop: isLoop,

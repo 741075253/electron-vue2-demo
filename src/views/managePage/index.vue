@@ -2,7 +2,7 @@
   <div class="manage">
     <el-container>
       <el-header>
-        <el-button class="back-btn" type="text" @click="toPage('/')">
+        <el-button class="back-btn" type="text" @click="toPage('/home')">
           <i class="el-icon-arrow-left"></i>
           返回
         </el-button>
@@ -11,12 +11,12 @@
       <el-container class="manage-container">
         <el-aside width="150px">
           <div class="menu">
-            <div class="menu-cell">资源管理</div>
+            <div class="menu-cell">党建资源管理</div>
             <div
               class="menu-cell"
               :class="{ active: pageName === 'VideoManage' }"
               level="2"
-              @click="changePage('VideoManage')"
+              @click="changePage('VideoManage', '1')"
             >
               视频管理
             </div>
@@ -24,7 +24,7 @@
               class="menu-cell"
               :class="{ active: pageName === 'ImgManage' }"
               level="2"
-              @click="changePage('ImgManage')"
+              @click="changePage('ImgManage', '1')"
             >
               图片管理
             </div>
@@ -32,12 +32,38 @@
               class="menu-cell"
               :class="{ active: pageName === 'FileManage' }"
               level="2"
-              @click="changePage('FileManage')"
+              @click="changePage('FileManage', '1')"
             >
               文件管理
             </div>
           </div>
-
+          <div class="menu">
+            <div class="menu-cell">内控资源管理</div>
+            <div
+              class="menu-cell"
+              :class="{ active: pageName === 'VideoManage' }"
+              level="2"
+              @click="changePage('VideoManage', '2')"
+            >
+              视频管理
+            </div>
+            <div
+              class="menu-cell"
+              :class="{ active: pageName === 'ImgManage' }"
+              level="2"
+              @click="changePage('ImgManage', '2')"
+            >
+              图片管理
+            </div>
+            <div
+              class="menu-cell"
+              :class="{ active: pageName === 'FileManage' }"
+              level="2"
+              @click="changePage('FileManage', '2')"
+            >
+              文件管理
+            </div>
+          </div>
           <div class="menu">
             <div class="menu-cell">电子签名</div>
             <div
@@ -52,7 +78,7 @@
         </el-aside>
         <el-main>
           <div class="list-container">
-            <component v-bind:is="pageName"></component>
+            <component v-bind:is="pageName" :type="type"></component>
           </div>
         </el-main>
       </el-container>
@@ -73,6 +99,7 @@
     data() {
       return {
         pageName: 'VideoManage',
+        type: '1', // 资源管理类型 1党建 2内控
       }
     },
     methods: {
@@ -82,8 +109,9 @@
           path,
         })
       },
-      changePage(name) {
+      changePage(name, type) {
         this.pageName = name
+        this.type = type || ''
       },
     },
   }

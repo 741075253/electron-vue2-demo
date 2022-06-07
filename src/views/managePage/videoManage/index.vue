@@ -53,10 +53,24 @@
 </template>
 <script>
   import { getFileName, parserPageList, getVideoInfo } from '@/utils/common'
+  import { typeOpt } from '../util'
   export default {
     name: 'videoManage',
+    props: {
+      type: {
+        type: String,
+        default: '1',
+      },
+    },
     data() {
+      const typeObj = typeOpt[this.type || '1']
+      const apiUrl = './api/' + typeObj.api
+      const dirUrl = './' + typeObj.dirName + '/video'
+      const posterUrl = './' + typeObj.dirName + '/posters'
       return {
+        apiUrl, // 轮播相对路径
+        dirUrl, // 文件相对路径
+        posterUrl, // 视频海报路径
         loading: false,
         total: 0,
         currentPage: 1,
@@ -81,7 +95,7 @@
         })
       },
       getBannerQueueList() {
-        window.electronApi.readJson('./api/banner-queue.json').then((data) => {
+        window.electronApi.readJson(this.apiUrl).then((data) => {
           if (data && data.length && data[0].type === 'video') {
             this.parseBanner(data)
           }
@@ -89,7 +103,7 @@
       },
       getList() {
         this.loading = true
-        window.electronApi.getDir('./video').then(async (files) => {
+        window.electronApi.getDir(this.dirUrl).then(async (files) => {
           this.loading = false
           if (files) {
             const pageList = []
@@ -99,13 +113,13 @@
               const isAdd = this.bannerOriginList.some(
                 (item) => item.file === file
               )
-              const url = window.electronApi.getUrl('./video/' + file)
+              const url = window.electronApi.getUrl(this.dirUrl + '/' + file)
               let imgUrl = ''
               const data = await getVideoInfo(fileName, url)
               imgUrl = window.electronApi.saveBase64Poster(
                 data.poster,
                 file,
-                './posters'
+                this.posterUrl
               )
               delete data.poster
               pageList.push({
@@ -127,7 +141,7 @@
         this.fileList = this.pageList[this.currentPage - 1]
       },
       addBanner(file, type = 'add', index) {
-        const url = './api/banner-queue.json'
+        const url = this.apiUrl
         let msg = ''
         let status = ''
         let param = this.bannerOriginList

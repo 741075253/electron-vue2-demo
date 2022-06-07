@@ -1,19 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+// import HomeView from '../views/HomeView.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    redirect: '/home',
+    name: 'welcomeView',
+    component: () =>
+      import(/* webpackChunkName: "welcome" */ '../views/WelcomeView.vue'),
   },
   {
     path: '/home',
     name: 'home',
-    component: HomeView,
+    component: () =>
+      import(/* webpackChunkName: "welcome" */ '../views/HomeView.vue'),
   },
   {
     path: '/display3D',

@@ -1,18 +1,10 @@
 [
   {
     "id": 0,
-    "fileName": "图片",
+    "fileName": "img",
     "isAdd": false,
-    "file": "图片.docx",
-    "path": "E:\\workspace\\electron-vue2-demo\\extra-resources\\file/图片.docx",
-    "type": "file"
-  },
-  {
-    "id": 1,
-    "fileName": "展厅软件浏览界面及功能设计（524更新）",
-    "isAdd": false,
-    "file": "展厅软件浏览界面及功能设计（524更新）.docx",
-    "path": "E:\\workspace\\electron-vue2-demo\\extra-resources\\file/展厅软件浏览界面及功能设计（524更新）.docx",
-    "type": "file"
+    "file": "img.jpg",
+    "path": "E:\\workspace\\electron-vue2-demo\\extra-resources\\img/img.jpg",
+    "type": "img"
   }
 ]

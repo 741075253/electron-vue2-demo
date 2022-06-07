@@ -29,15 +29,23 @@ contextBridge.exposeInMainWorld('electronApi', {
     if (!fs.existsSync(src)) {
       return Promise.resolve(false)
     }
-    const file = await fs.readFileSync(src)
-    return Promise.resolve(file)
+    try {
+      const file = await fs.readFileSync(src)
+      return Promise.resolve(file)
+    } catch (e) {
+      return Promise.resolve(false)
+    }
   },
   removeFile: (url) => {
     if (!fs.existsSync(url)) {
       return false
     } else {
       // 删除成功返回undefined
-      return fs.unlinkSync(url)
+      try {
+        return fs.unlinkSync(url)
+      } catch (e) {
+        return false
+      }
     }
   },
   copyFile: async (sourceDirPath, destDirPath, filename) => {
