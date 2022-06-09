@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain, dialog } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, dialog, Menu } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const path = require('path')
@@ -16,7 +16,7 @@ async function handleDialogOpen(event, opt) {
   if (canceled) {
     return
   } else {
-    return filePaths[0]
+    return filePaths
   }
 }
 async function createWindow() {
@@ -44,7 +44,7 @@ async function createWindow() {
     win.loadURL('app://./index.html')
   }
   // 关闭菜单栏
-  // Menu.setApplicationMenu(null)
+  Menu.setApplicationMenu(null)
 }
 
 // Quit when all windows are closed.

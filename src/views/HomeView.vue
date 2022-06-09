@@ -28,13 +28,13 @@
         </div>
       </swiper-slide>
       <swiper-slide>
-        <div class="sign">
+        <div class="resource">
           <img src="../assets/images/3.jpg" @click="handleResourceClick(2)" />
         </div>
       </swiper-slide>
       <swiper-slide>
         <div class="sign">
-          <img src="../assets/images/4.png" @click="toPage('/signLeader')" />
+          <img src="../assets/images/4.png" @click="toPage('signLeader')" />
         </div>
       </swiper-slide>
     </swiper>
@@ -70,7 +70,6 @@
     data() {
       return {
         swiperOption: {
-          loop: true,
           //自动播放
           autoplay: {
             delay: 5000,
@@ -109,10 +108,11 @@
       },
     },
     methods: {
-      toPage(path) {
+      toPage(path, query = {}) {
         console.log(path)
         this.$router.push({
           path,
+          query,
         })
       },
       clearTimer() {
@@ -176,21 +176,29 @@
         const { type, list } = this.resource[name]
         this.$store.commit('setResourceList', list)
         let path = ''
+        let query = {}
         if (type === 'img') {
           path = '/displayResource/imgPreview'
         } else if (type === 'video') {
           path = '/displayResource/videoPreviewList'
           if (list.length === 1) {
             path = '/displayResource/videoPreview'
+            query = {
+              url: list[0].path,
+              poster: list[0].imgUrl,
+            }
           }
         } else if (type === 'file') {
           path = '/displayResource/filePreviewList'
           if (list.length === 1) {
             path = '/displayResource/filePreview'
+            query = {
+              url: list[0].path,
+            }
           }
         }
         console.log(path, this.$store.state.resourceList)
-        this.toPage(path)
+        this.toPage(path, query)
       },
     },
     mounted() {

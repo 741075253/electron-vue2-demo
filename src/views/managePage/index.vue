@@ -2,8 +2,7 @@
   <div class="manage">
     <el-container>
       <el-header>
-        <el-button class="back-btn" type="text" @click="toPage('/home')">
-          <i class="el-icon-arrow-left"></i>
+        <el-button class="back-btn" type="primary" @click="toPage('/home')">
           返回
         </el-button>
         <div class="title">资源中心</div>
@@ -132,11 +131,6 @@
       top: 20px;
       height: 40px;
       width: 100px;
-      border-radius: 2px;
-      color: white;
-      font-weight: bold;
-      font-size: 20px;
-      text-align: left;
     }
     .title {
       font-size: 40px;

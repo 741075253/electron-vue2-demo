@@ -31,6 +31,7 @@
       </div>
       <div class="page">
         <el-button type="primary">开始轮播</el-button>
+        <el-button type="primary" @click="handleUpload">上传</el-button>
         <el-pagination
           @current-change="handleCurrentChange"
           :current-page.sync="currentPage"
@@ -182,7 +183,9 @@
           type: 'warning',
           callback: (action) => {
             if (action === 'confirm') {
-              window.electronApi.writeJson(url, param, (error) => {
+              console.log(action)
+              window.electronApi.writeJson(url, param).then((error) => {
+                console.log(error)
                 if (error) {
                   this.$Message.error(status + '失败，请重试!')
                 } else {
@@ -198,6 +201,46 @@
                   this.$Message.success(status + '成功')
                 }
               })
+            }
+          },
+        })
+      },
+      async handleUpload() {
+        const result = await window.electronApi.openDialog({
+          properties: ['openFile', 'multiSelections'],
+          filters: [
+            {
+              name: 'Movies',
+              extensions: ['mp4'],
+            },
+          ],
+        })
+        if (!result || !result.length) {
+          return
+        }
+        const nameList = [] // 文件名
+        const pathList = [] // 文件路径
+        result.forEach((item) => {
+          const lastLine = item.lastIndexOf('\\')
+          nameList.push(item.substring(lastLine + 1))
+          pathList.push(item.substring(0, lastLine))
+        })
+        this.$msgbox({
+          title: '消息',
+          message: '是否确定上传：' + nameList.join('、'),
+          showCancelButton: true,
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          callback: (action) => {
+            if (action === 'confirm') {
+              const destPath = window.electronApi.getUrl(this.dirUrl)
+              nameList.forEach((name, index) => {
+                window.electronApi.copyFile(pathList[index], destPath, name)
+              })
+              this.$Message.success('上传成功')
+              this.currentPage = 1
+              this.getList()
             }
           },
         })

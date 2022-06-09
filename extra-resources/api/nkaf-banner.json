@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "id": 0,
+    "fileName": "img",
+    "isAdd": false,
+    "file": "img.jpg",
+    "path": "E:\\workspace\\electron-vue2-demo\\extra-resources\\nkaf\\img/img.jpg",
+    "type": "img"
+  }
+]

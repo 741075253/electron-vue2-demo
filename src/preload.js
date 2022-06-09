@@ -27,24 +27,23 @@ contextBridge.exposeInMainWorld('electronApi', {
       src = getExtraResourcesPath(url)
     }
     if (!fs.existsSync(src)) {
-      return Promise.resolve(false)
+      return false
     }
     try {
-      const file = await fs.readFileSync(src)
-      return Promise.resolve(file)
+      return await fs.readFileSync(src)
     } catch (e) {
-      return Promise.resolve(false)
+      return false
     }
   },
   removeFile: (url) => {
     if (!fs.existsSync(url)) {
-      return false
+      return true
     } else {
       // 删除成功返回undefined
       try {
         return fs.unlinkSync(url)
       } catch (e) {
-        return false
+        return e
       }
     }
   },
@@ -83,7 +82,7 @@ contextBridge.exposeInMainWorld('electronApi', {
       const raw = data.replace(/^data:image\/(jpeg|png|jpg);base64,/, '')
       const buffer = Buffer.from(raw, 'base64')
 
-      const temp = path.join(getExtraResourcesPath(dirName))
+      const temp = getExtraResourcesPath(dirName)
       if (!fs.existsSync(temp)) {
         fs.mkdirSync(temp, { recursive: true })
       }
@@ -97,6 +96,9 @@ contextBridge.exposeInMainWorld('electronApi', {
   },
   openDialog: (opt) => {
     return ipcRenderer.invoke('dialog:openDialog', opt)
+  },
+  translatePath: (url) => {
+    return url.split(path.sep).join('/')
   },
 })
 

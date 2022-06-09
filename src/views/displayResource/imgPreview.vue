@@ -40,6 +40,11 @@
         },
       }
     },
+    computed: {
+      swiper() {
+        return this.$refs.swiper.swiper
+      },
+    },
     methods: {
       toPage(path) {
         this.$router.push({
@@ -60,5 +65,6 @@
     position: absolute;
     left: 30px;
     top: 30px;
+    z-index: 9;
   }
 </style>

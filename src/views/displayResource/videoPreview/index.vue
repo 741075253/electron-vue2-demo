@@ -19,7 +19,8 @@
         player: null,
       }
     },
-    mounted() {
+    created() {
+      console.log(window.electronApi.translatePath(this.$route.query.poster))
       this.init()
     },
     methods: {
@@ -27,19 +28,24 @@
         this.$router.push({ path })
       },
       init() {
-        this.player = new Player({
-          id: 'mse',
-          url: this.$route.query.url,
-          poster: this.$route.query.poster, //封面图
-          cssFullscreen: true,
-          lang: 'zh-cn',
-          autoplay: false,
-          volume: 0.3, // 音量
-          playbackRate: [0.5, 0.75, 1, 1.5, 2],
-          height: window.innerHeight,
-          width: window.innerWidth,
+        this.$nextTick(() => {
+          this.player = new Player({
+            id: 'mse',
+            url: this.$route.query.url,
+            poster: window.electronApi.translatePath(this.$route.query.poster), //封面图
+            cssFullscreen: true,
+            lang: 'zh-cn',
+            autoplay: false,
+            volume: 0.3, // 音量
+            playbackRate: [0.5, 0.75, 1, 1.5, 2],
+            height: window.innerHeight,
+            width: window.innerWidth,
+          })
         })
       },
+    },
+    beforeDestroy() {
+      this.player.destroy(true)
     },
   }
 </script>
@@ -51,7 +57,7 @@
       position: absolute;
       left: 30px;
       top: 30px;
-      z-index: 99;
+      z-index: 99999;
     }
   }
 </style>

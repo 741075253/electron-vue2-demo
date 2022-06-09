@@ -1,6 +1,6 @@
 <template>
   <div class="img-content">
-    <el-button type="primary" class="back-btn" @click="tpPage('/home')">
+    <el-button type="primary" class="back-btn" @click="toPage('/home')">
       返回
     </el-button>
     <div @click="handleTypeChange" class="change-btn">{{ typeName }}</div>
@@ -74,6 +74,7 @@
       position: absolute;
       left: 30px;
       top: 30px;
+      z-index: 2;
     }
     .change-btn {
       position: absolute;
@@ -85,6 +86,7 @@
       font-size: 20px;
       border: 1px solid #e6e6e6;
       border-radius: 5px;
+      z-index: 2;
     }
   }
   .img-container {
@@ -102,18 +104,22 @@
       &.position-1 {
         left: 50px;
         top: 50px;
+        background: red;
       }
       &.position-2 {
         left: 150px;
         top: 250px;
+        background: black;
       }
       &.position-3 {
         right: 50;
         bottom: 150px;
+        background: yellow;
       }
       &.position-4 {
         right: 50;
         bottom: 150px;
+        background: green;
       }
     }
   }

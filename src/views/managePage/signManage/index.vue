@@ -110,11 +110,11 @@
           title: '下载目录',
           properties: ['openDirectory'],
         })
-        if (result) {
+        if (result && result.length) {
           this.selectedList.forEach((item) => {
             const info = window.electronApi.copyFile(
               item.baseUrl,
-              result,
+              result[0],
               item.file
             )
             console.log(info)
@@ -140,7 +140,12 @@
               imgUrlList.forEach((url) => {
                 list.push(window.electronApi.removeFile(url))
               })
-              this.$Message.success('删除成功')
+              if (list.find((item) => !!item)) {
+                this.$Message.error('部分图片删除失败')
+              } else {
+                this.$Message.success('删除成功')
+              }
+
               console.log(list)
             }
           },

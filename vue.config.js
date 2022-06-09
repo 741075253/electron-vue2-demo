@@ -1,5 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 const path = require('path')
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+// const isProduction = process.env.NODE_ENV === 'production'
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -7,6 +9,7 @@ function resolve(dir) {
 module.exports = defineConfig({
   publicPath: process.env.BASE_URL,
   transpileDependencies: true,
+  assetsDir: 'static',
   devServer: {
     port: 9999,
   },
@@ -23,7 +26,7 @@ module.exports = defineConfig({
         //   output: 'build' // 输出文件夹
         // },
         win: {
-          icon: 'public/icon.png',
+          icon: 'public/logo.icon',
           // target: ['nsis', 'zip'],
         },
         nsis: {
@@ -32,9 +35,9 @@ module.exports = defineConfig({
           perMachine: true, // 是否开启安装时权限限制（此电脑或当前用户）
           allowElevation: true, // 允许请求提升。 如果为false，则用户必须使用提升的权限重新启动安装程序。
           allowToChangeInstallationDirectory: true, // 允许修改安装目录
-          // installerIcon: './build/icons/aaa.ico', // 安装图标
-          // uninstallerIcon: './build/icons/bbb.ico', // 卸载图标
-          // installerHeaderIcon: './build/icons/aaa.ico', // 安装时头部图标
+          installerIcon: 'public/logo.icon', // 安装图标
+          uninstallerIcon: 'public/logo.icon', // 卸载图标
+          installerHeaderIcon: 'public/logo.icon', // 安装时头部图标
           createDesktopShortcut: true, // 创建桌面图标
           createStartMenuShortcut: true, // 创建开始菜单图标
           shortcutName: '全景图', // 图标名称
@@ -43,11 +46,30 @@ module.exports = defineConfig({
       },
     },
   },
+  // configureWebpack: (config) => {
+  //   if (isProduction) {
+  //     config.plugins.push(
+  //       new UglifyJsPlugin({
+  //         uglifyOptions: {
+  //           output: {
+  //             comments: false, // 去掉注释
+  //           },
+  //           warnings: false,
+  //           compress: {
+  //             drop_console: true,
+  //             drop_debugger: false,
+  //             pure_funcs: ['console.log'], //移除console
+  //           },
+  //         },
+  //       })
+  //     )
+  //   }
+  // },
   chainWebpack: (config) => {
-    config.resolve.alias
-      .set('@', resolve('src'))
-      .set('src', resolve('src'))
-      .set('common', resolve('src/common'))
-      .set('components', resolve('src/components'))
+    config.resolve.alias.set('@', resolve('src'))
+    // .set('src', resolve('src'))
+    // .set('common', resolve('src/common'))
+    // .set('components', resolve('src/components'))
   },
+  productionSourceMap: false,
 })

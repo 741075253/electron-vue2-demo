@@ -60,9 +60,10 @@
         window.electronApi
           .readFile(url, true)
           .then((data) => {
-            console.log(data)
+            this.loading = false
             if (!data) {
-              console.error('文件下载失败')
+              this.$Message.error('文件读取失败！')
+              return
             }
             const file = new File([data], filename, {})
             this.handleChange({ target: { files: [file] } })
@@ -94,7 +95,7 @@
         const { output } = this.$refs
         // 生成新的dom
         const node = document.createElement('div')
-        // 添加孩子，防止vue实例替换dom元素
+        // 添加子节点，防止vue实例替换dom元素
         if (this.last) {
           output.removeChild(this.last.$el)
           this.last.$destroy()

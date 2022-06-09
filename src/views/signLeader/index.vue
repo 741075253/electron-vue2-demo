@@ -1,5 +1,8 @@
 <template>
   <div class="sign">
+    <el-button class="back-btn" type="primary" @click="toPage('/home')">
+      返回
+    </el-button>
     <div class="title">电子签名</div>
     <div class="sign-content">
       <vue-esign
@@ -33,6 +36,11 @@
       }
     },
     methods: {
+      toPage(path) {
+        this.$router.push({
+          path,
+        })
+      },
       handleReset() {
         this.$refs.esign.reset()
       },
@@ -58,10 +66,21 @@
   }
 </script>
 <style scoped lang="scss">
+  .sign {
+    position: relative;
+  }
+  .back-btn {
+    position: absolute;
+    left: 0;
+    top: 20px;
+    height: 40px;
+    width: 100px;
+  }
   .title {
     height: 80px;
     font-size: 40px;
     line-height: 80px;
+    text-align: center;
   }
   .sign-content {
     margin-top: 20px;
