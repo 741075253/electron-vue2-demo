@@ -1,6 +1,15 @@
 <template>
   <div class="img">
-    <el-button type="primary" @click="toPage('/home')">返回</el-button>
+    <el-button
+      type="primary"
+      @click="
+        toPage('/home', {
+          index: 1,
+        })
+      "
+    >
+      返回
+    </el-button>
     <swiper :options="swiperOption" ref="swiper">
       <swiper-slide v-for="(src, index) in resourceList" :key="index">
         <img :src="src.path" />
@@ -12,8 +21,10 @@
 <script>
   import 'swiper/dist/css/swiper.css'
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
+  import common from '@/mixins/common'
   export default {
     name: 'imgPreview',
+    mixins: [common],
     components: {
       swiper,
       swiperSlide,
@@ -45,13 +56,7 @@
         return this.$refs.swiper.swiper
       },
     },
-    methods: {
-      toPage(path) {
-        this.$router.push({
-          path,
-        })
-      },
-    },
+    methods: {},
     beforeDestroy() {
       this.swiper.destroy()
     },

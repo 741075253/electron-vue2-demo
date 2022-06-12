@@ -8,6 +8,7 @@
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
+          @change="handleTimeChange"
         ></el-date-picker>
       </div>
       <div class="search-cell">
@@ -20,22 +21,19 @@
     <div class="table-container">
       <el-table
         ref="table"
-        :data="tableData"
+        border
         tooltip-effect="dark"
-        style="width: 100%"
+        :data="tableData"
+        :height="tableHeight"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column label="填写日期" width="120">
+        <el-table-column type="selection"></el-table-column>
+        <el-table-column label="填写日期">
           <template slot-scope="scope">{{ scope.row.date }}</template>
         </el-table-column>
-        <el-table-column label="缩略图" width="120">
+        <el-table-column label="缩略图">
           <template slot-scope="scope">
-            <el-image
-              style="width: 100px; height: 100px"
-              :src="scope.row.url"
-              :preview-src-list="[scope.row.url]"
-            ></el-image>
+            <el-image style="width: 100px" :src="scope.row.url"></el-image>
           </template>
         </el-table-column>
       </el-table>
@@ -44,7 +42,7 @@
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page.sync="currentPage"
-        :page-size="100"
+        :page-size="pageSize"
         layout="total, prev, pager, next"
         :total="total"
       ></el-pagination>
@@ -60,15 +58,18 @@
       return {
         date: '',
         currentPage: 1,
+        pageSize: 20,
         selectedList: [],
         total: 0,
+        allOriginData: [], // 所有原始数据
         tableOriginData: [],
         tableData: [
-          {
-            date: '1231241234',
-            url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-          },
+          // {
+          //   date: '1231241234',
+          //   url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+          // },
         ],
+        tableHeight: 0,
       }
     },
     methods: {
@@ -85,7 +86,8 @@
               }
             })
             this.total = files.length
-            this.tableOriginData = parserPageList(pageList, 10)
+            this.allOriginData = [...pageList]
+            this.tableOriginData = parserPageList(pageList, this.pageSize)
             this.getPageData()
           }
         })
@@ -101,6 +103,21 @@
         this.currentPage = currentPage
         this.getPageData()
       },
+      handleTimeChange(value) {
+        this.currentPage = 1
+        let list = [...this.allOriginData]
+        if (value && value.length === 2) {
+          list = list.filter((item) => {
+            const { date } = item
+            return (
+              dayjs(value[0]).isBefore(date) && dayjs(value[1]).isAfter(date)
+            )
+          })
+        }
+        this.total = list.length
+        this.tableOriginData = parserPageList(list, this.pageSize)
+        this.getPageData()
+      },
       async handleDownload() {
         if (!this.selectedList.length) {
           this.$Message.warning('请选择数据')
@@ -111,14 +128,22 @@
           properties: ['openDirectory'],
         })
         if (result && result.length) {
+          let errList = []
           this.selectedList.forEach((item) => {
             const info = window.electronApi.copyFile(
               item.baseUrl,
               result[0],
               item.file
             )
-            console.log(info)
+            if (info) {
+              errList.push(info)
+            }
           })
+          if (errList.length == this.selectedList.length) {
+            this.$Message.error('下载失败，请使用管理员权限')
+          } else {
+            this.$Message.success('下载成功')
+          }
         }
       },
       handleDelete() {
@@ -135,18 +160,15 @@
               const imgUrlList = this.selectedList.map((item) => {
                 return item.url
               })
-              console.log(imgUrlList)
               const list = []
               imgUrlList.forEach((url) => {
                 list.push(window.electronApi.removeFile(url))
               })
-              if (list.find((item) => !!item)) {
-                this.$Message.error('部分图片删除失败')
+              if (list.length === imgUrlList.length) {
+                this.$Message.error('删除失败, 请使用管理员权限')
               } else {
                 this.$Message.success('删除成功')
               }
-
-              console.log(list)
             }
           },
         })
@@ -154,10 +176,16 @@
     },
     created() {
       this.getList()
+      this.$nextTick(() => {
+        this.tableHeight = document.querySelector('.sign').clientHeight - 92
+      })
     },
   }
 </script>
 <style scoped lang="scss">
+  .sign {
+    height: 100%;
+  }
   .search-container {
     display: flex;
     .search-cell {
@@ -165,9 +193,14 @@
     }
   }
   .table-container {
-    border: 1px solid #e6e6e6;
-    .el-table {
-      width: 100%;
+    margin-top: 20px;
+    .el-table::v-deep {
+      .el-table__cell {
+        padding: 5px 0;
+      }
     }
+  }
+  .page-container {
+    text-align: right;
   }
 </style>

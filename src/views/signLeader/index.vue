@@ -1,46 +1,52 @@
 <template>
   <div class="sign">
-    <el-button class="back-btn" type="primary" @click="toPage('/home')">
+    <img src="@/assets/images/sign.png" />
+    <el-button
+      class="back-btn"
+      type="primary"
+      @click="
+        toPage('/home', {
+          index: 1,
+        })
+      "
+    >
       返回
     </el-button>
-    <div class="title">电子签名</div>
     <div class="sign-content">
       <vue-esign
         ref="esign"
-        :width="500"
-        :height="300"
+        :width="signWidth"
+        :height="signHeight"
         :isCrop="isCrop"
         :lineWidth="lineWidth"
         :lineColor="lineColor"
         :bgColor.sync="bgColor"
       />
     </div>
-    <div class="btn">
-      <el-button @click="handleReset">重置</el-button>
-      <el-button type="primary" @click="handleGenerate">保存</el-button>
-    </div>
+    <div class="btn btn-1" @click="handleReset">重置</div>
+    <div class="btn btn-2" @click="handleGenerate">保存</div>
   </div>
 </template>
 <script>
   import vueEsign from 'vue-esign'
   import dayjs from 'dayjs'
+  import common from '@/mixins/common'
   export default {
     name: 'signLeader',
     components: { vueEsign },
+    mixins: [common],
     data() {
+      const $body = document.body
       return {
         lineWidth: 6,
         lineColor: '#000000',
         bgColor: '',
         isCrop: false,
+        signWidth: $body.clientWidth * 0.8,
+        signHeight: $body.clientHeight * 0.5,
       }
     },
     methods: {
-      toPage(path) {
-        this.$router.push({
-          path,
-        })
-      },
       handleReset() {
         this.$refs.esign.reset()
       },
@@ -48,7 +54,6 @@
         this.$refs.esign
           .generate()
           .then((res) => {
-            console.log(res)
             const url = window.electronApi.saveBase64Poster(
               res,
               dayjs().format('YYYYMMDDHHmmss'),
@@ -63,11 +68,24 @@
           })
       },
     },
+    mounted() {
+      this.$nextTick(() => {
+        this.signWidth = document.body.clientWidth * 0.8
+        this.signHeight = document.body.clientHeight * 0.5
+      })
+    },
   }
 </script>
 <style scoped lang="scss">
   .sign {
     position: relative;
+    width: 100vw;
+    height: 100vh;
+    & > img {
+      display: block;
+      widows: 100%;
+      height: 100%;
+    }
   }
   .back-btn {
     position: absolute;
@@ -76,18 +94,26 @@
     height: 40px;
     width: 100px;
   }
-  .title {
-    height: 80px;
-    font-size: 40px;
-    line-height: 80px;
-    text-align: center;
-  }
   .sign-content {
-    margin-top: 20px;
-    border: 1px solid #e6e6e6;
+    position: absolute;
+    left: 10%;
+    top: 20%;
+    width: 80%;
+    height: 50%;
   }
   .btn {
-    display: flex;
-    justify-content: end;
+    position: absolute;
+    right: 10%;
+    bottom: 10%;
+    width: 10vw;
+    height: 10vw;
+    border-radius: 100%;
+    background: gray;
+  }
+  .btn-1 {
+    right: 30%;
+  }
+  .btn-2 {
+    right: 10%;
   }
 </style>

@@ -118,7 +118,7 @@ export default {
         mergeCells: this.merge,
         colHeaders: true,
         rowHeaders: true,
-        height: 'calc(100vh - 107px)',
+        height: 'calc(100vh - 26px)',
         // contextMenu: true,
         // manualRowMove: true,
         // 关闭外部点击取消选中时间的行为

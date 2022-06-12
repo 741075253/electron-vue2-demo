@@ -6,8 +6,9 @@
 .list-cells {
   display: grid;
   grid-template-columns: repeat(3, 30%);
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
+  grid-template-rows: repeat(2, 47%);
+  grid-column-gap: 5%;
+  grid-row-gap: 6%;
   text-align: center;
 
   .list-cell {
@@ -30,12 +31,11 @@
   .video-container {
     position: relative;
     margin: 0 auto;
-    width: 80%;
-    height: 60px;
+    height: calc(100% - 59px);
+    overflow: hidden;
 
     img {
       width: 100%;
-      height: 100%;
     }
 
     .time {

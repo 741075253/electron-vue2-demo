@@ -1,6 +1,7 @@
 <template>
   <div :class="{ hidden }">
     <div class="container">
+      <el-button @click="back" class="back-btn">返回</el-button>
       <div v-show="loading" class="well loading">正在加载中，请耐心等待...</div>
       <div v-show="!loading" class="well" ref="output"></div>
     </div>
@@ -8,6 +9,7 @@
 </template>
 
 <script>
+  import common from '@/mixins/common'
   import { getExtend, readBuffer, render } from '@/components/util'
   import { parse } from 'qs'
 
@@ -21,6 +23,7 @@
     props: {
       msg: String,
     },
+    mixins: [common],
     data() {
       return {
         // 加载状态跟踪
@@ -50,6 +53,9 @@
       this.loadFromUrl()
     },
     methods: {
+      back() {
+        this.$router.go(-1)
+      },
       // 从url加载
       loadFromUrl() {
         this.loading = true
@@ -112,108 +118,25 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .banner {
-    overflow: auto;
-    text-align: center;
-    background-color: #12b6ff;
-    color: #fff;
-  }
-
-  .hidden .banner {
-    display: none;
+  .back-btn {
+    position: absolute;
+    z-index: 999999;
   }
 
   .hidden .well {
-    height: calc(100vh - 12px);
+    height: 100vh;
   }
-
-  .overlay {
-    position: absolute;
-    transition: all;
-    z-index: 1000;
-    opacity: 0.4;
-    top: 50px;
-    left: 112px;
-    padding: 20px;
-    border-radius: 5px;
-    background: white;
-    border: 1px solid silver;
-  }
-
-  .overlay:hover {
-    opacity: 1;
-  }
-
-  .file-select {
-    position: absolute;
-    left: 5%;
-    line-height: 35px;
-    margin-left: 20px;
-  }
-
-  .banner a {
-    color: #fff;
-    text-decoration: none;
-  }
-
-  .banner h1 {
-    font-size: 20px;
-    line-height: 2;
-    margin: 0.5em 0;
-  }
-
   .well {
     display: block;
     background-color: #f2f2f2;
-    border: 1px solid #ccc;
-    margin: 5px;
-    width: calc(100% - 12px);
-    height: calc(100vh - 73px);
+    width: 100vw;
+    height: 100vh;
     overflow: auto;
   }
 
   .loading {
     text-align: center;
     padding-top: 50px;
-  }
-
-  .file-select button {
-    background: #fafafa;
-  }
-
-  .overlay button {
-    background: #12b6ff;
-    color: white;
-  }
-
-  button {
-    outline: none;
-    border-radius: 20px;
-    border: 1px solid #e3e3e3;
-    line-height: 19px;
-    padding: 5px 12px;
-    cursor: pointer;
-  }
-
-  .overlay input[type='text'] {
-    line-height: 19px;
-    height: 30px;
-    width: 300px;
-    outline: none;
-    border: 1px solid silver;
-    border-radius: 6px;
-    margin-right: 10px;
-  }
-
-  .overlay input[type='file'] {
-    position: absolute;
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    z-index: 2;
-    cursor: pointer;
   }
 
   .upload-cover {

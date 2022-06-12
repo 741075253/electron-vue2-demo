@@ -7,9 +7,9 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'welcomeView',
-    component: () =>
-      import(/* webpackChunkName: "welcome" */ '../views/WelcomeView.vue'),
+    redirect: '/home',
+    // component: () =>
+    //   import(/* webpackChunkName: "welcome" */ '../views/WelcomeView.vue'),
   },
   {
     path: '/home',

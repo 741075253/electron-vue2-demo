@@ -3,7 +3,7 @@
     <template v-if="pageList.length">
       <div class="list-cells">
         <div class="list-cell" v-for="(item, index) in fileList" :key="item.id">
-          <div class="img-container">
+          <div class="file-container">
             <img :src="item.imgUrl" />
           </div>
           <p class="title">{{ item.fileName }}</p>
@@ -29,15 +29,35 @@
         </div>
       </div>
       <div class="page">
-        <el-button type="primary">开始轮播</el-button>
-        <el-button type="primary" @click="handleUpload">上传</el-button>
-        <el-pagination
-          @current-change="handleCurrentChange"
-          :current-page.sync="currentPage"
-          :page-size="6"
-          layout="total, prev, pager, next"
-          :total="total"
-        ></el-pagination>
+        <div>
+          <el-button type="primary" @click="handleResourceClick('file')">
+            开始轮播
+          </el-button>
+          <el-button
+            type="primary"
+            style="margin-left: 15px"
+            @click="handleUpload"
+          >
+            上传
+          </el-button>
+        </div>
+        <div>
+          <el-button
+            type="primary"
+            v-if="currentPage > 1"
+            @click="handleCurrentChange(currentPage - 1)"
+          >
+            上一页
+          </el-button>
+          <el-button
+            type="primary"
+            style="margin-left: 15px"
+            v-if="currentPage < pageCount"
+            @click="handleCurrentChange(currentPage + 1)"
+          >
+            下一页
+          </el-button>
+        </div>
       </div>
       <div class="banner-list" v-if="bannerList && bannerList.length">
         轮播队列：
@@ -57,6 +77,7 @@
   import excelImg from '../../../assets/images/excel.png'
   import pptImg from '../../../assets/images/ppt.png'
   import { typeOpt } from '../util'
+  import common from '@/mixins/common'
   const imgOpt = {
     docx: wordImg,
     pptx: pptImg,
@@ -64,6 +85,7 @@
   }
   export default {
     name: 'fileManage',
+    mixins: [common],
     props: {
       type: {
         type: String,
@@ -85,6 +107,11 @@
         bannerList: [],
         bannerOriginList: [],
       }
+    },
+    computed: {
+      pageCount() {
+        return Math.ceil(this.total / 6)
+      },
     },
     methods: {
       handleCurrentChange(pageIndex) {
@@ -139,7 +166,8 @@
       getPageData() {
         this.fileList = this.pageList[this.currentPage - 1]
       },
-      addBanner(file, type = 'add', index) {
+      addBanner(files, type = 'add', index) {
+        const file = { ...files }
         if (file) {
           delete file.imgUrl
         }
@@ -245,6 +273,41 @@
           },
         })
       },
+      handleResourceClick(type) {
+        const list = [...this.bannerOriginList]
+        if (!this.bannerOriginList.length) {
+          this.$alert('没有轮播展示！', '提示')
+          return
+        }
+        this.$store.commit('setResourceList', list)
+        let path = ''
+        let query = {}
+
+        if (type === 'img') {
+          path = '/displayResource/imgPreview'
+        } else if (type === 'video') {
+          path = '/displayResource/videoPreviewList'
+          if (list.length === 1) {
+            path = '/displayResource/videoPreview'
+            query = {
+              url: list[0].path,
+              poster: list[0].imgUrl,
+            }
+          }
+          query.type = this.type
+        } else if (type === 'file') {
+          path = '/displayResource/filePreviewList'
+          if (list.length === 1) {
+            path = '/displayResource/filePreview'
+            query = {
+              url: list[0].path,
+            }
+          }
+          query.type = this.type
+        }
+        console.log(path, this.$store.state.resourceList)
+        this.toPage(path, query)
+      },
     },
     async created() {
       await this.getBannerQueueList()
@@ -253,5 +316,5 @@
   }
 </script>
 <style scoped lang="scss">
-  @import '@/style/list.scss';
+  @import '../list.scss';
 </style>

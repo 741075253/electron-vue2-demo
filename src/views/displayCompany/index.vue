@@ -1,66 +1,97 @@
 <template>
   <div class="img-content">
-    <el-button type="primary" class="back-btn" @click="toPage('/home')">
+    <el-button
+      type="primary"
+      class="back-btn"
+      @click="toPage('/home', { index: 1 })"
+    >
       返回
     </el-button>
-    <div @click="handleTypeChange" class="change-btn">{{ typeName }}</div>
     <div class="img-container" v-if="type == 1">
-      <img src="../../assets/images/1.jpg" />
+      <img src="../../assets/images/3d/base.jpg" />
+      <div class="btn btn-1" @click="handleTypeChange(2, 1)"></div>
+      <div class="btn btn-2-1" @click="handleTypeChange(2, 2)"></div>
+      <div class="btn btn-2-2" @click="handleTypeChange(2, 2)"></div>
+      <div class="btn btn-3" @click="handleTypeChange(2, 3)"></div>
+      <div class="btn btn-4" @click="handleTypeChange(2, 4)"></div>
+      <div class="btn btn-5" @click="handleTypeChange(2, 5)"></div>
+      <div class="btn btn-6" @click="handleTypeChange(2, 6)"></div>
+      <div class="btn btn-7" @click="handleTypeChange(2, 7)"></div>
+      <div class="btn btn-8" @click="handleTypeChange(2, 8)"></div>
+      <div class="btn btn-9" @click="handleTypeChange(2, 9)"></div>
+      <div class="btn btn-10" @click="handleTypeChange(2, 10)"></div>
+      <div class="btn btn-11" @click="handleTypeChange(2, 11)"></div>
+      <div class="btn btn-12" @click="handleTypeChange(2, 12)"></div>
     </div>
     <div class="position-container" v-else>
-      <div class="img-container" v-if="position == 'all'">
-        <img src="../../assets/images/2.jpg" />
-        <div
-          class="position position-1"
-          @click="handlePositionChange('1')"
-        ></div>
-        <div
-          class="position position-2"
-          @click="handlePositionChange('2')"
-        ></div>
-      </div>
-      <div class="img-container" v-else-if="position == '1'">
-        <img src="../../assets/images/3.jpg" />
-        <div
-          class="position position-3"
-          @click="handlePositionChange('all')"
-        ></div>
-      </div>
-      <div class="img-container" v-else-if="position == '2'">
-        <img src="../../assets/images/3.jpg" />
-        <div
-          class="position position-4"
-          @click="handlePositionChange('all')"
-        ></div>
+      <i class="el-icon-close close-btn" @click="handleTypeChange(1)"></i>
+      <div class="img-container-w">
+        <img :src="images[0]" />
       </div>
     </div>
   </div>
 </template>
 <script>
+  import common from '@/mixins/common'
+  import Img1 from '@/assets/images/3d/1.jpg'
+  import Img2 from '@/assets/images/3d/2.jpg'
+  import Img3 from '@/assets/images/3d/3.jpg'
+  import Img4 from '@/assets/images/3d/4.jpg'
+  import Img5 from '@/assets/images/3d/5.jpg'
+  import Img6 from '@/assets/images/3d/6.jpg'
+  import Img7 from '@/assets/images/3d/7.jpg'
+  import Img8 from '@/assets/images/3d/8.jpg'
+  import Img9 from '@/assets/images/3d/9.jpg'
+  import Img10 from '@/assets/images/3d/10.jpg'
+  import Img11 from '@/assets/images/3d/11.jpg'
+  import Img12 from '@/assets/images/3d/12.jpg'
+  const imgOpt = {
+    1: Img1,
+    2: Img2,
+    3: Img3,
+    4: Img4,
+    5: Img5,
+    6: Img6,
+    7: Img7,
+    8: Img8,
+    9: Img9,
+    10: Img10,
+    11: Img11,
+    12: Img12,
+  }
   export default {
     name: 'display3D',
+    mixins: [common],
     data() {
       return {
         type: 1, // 1图片 2 场景
         position: 'all', // 场景切换
+        images: [],
       }
     },
-    computed: {
-      typeName() {
-        return this.type === 1 ? '3D全景图' : '俯瞰图'
-      },
-    },
     methods: {
-      toPage(path) {
-        this.$router.push({
-          path,
-        })
-      },
-      handleTypeChange() {
-        this.type = this.type === 1 ? 2 : 1
+      handleTypeChange(type, index) {
+        this.type = type
+        this.images = [imgOpt[index] || '']
       },
       handlePositionChange(position) {
         this.position = position
+      },
+      inited(viewer) {
+        this.$viewer = viewer
+        this.$viewer.index = this.activeIndex
+        // 不要他的按钮
+        this.$viewer.options.button = false
+        // 不要他的底部缩略图
+        this.$viewer.options.navbar = false
+        // 不要他的底部标题
+        this.$viewer.options.title = false
+        // 不要他的底部工具栏
+        this.$viewer.options.toolbar = false
+        this.show()
+      },
+      show() {
+        this.$viewer.show()
       },
     },
   }
@@ -68,24 +99,10 @@
 <style scoped lang="scss">
   .img-content {
     position: relative;
-    width: 100vw;
-    height: 100vh;
     .back-btn {
       position: absolute;
       left: 30px;
       top: 30px;
-      z-index: 2;
-    }
-    .change-btn {
-      position: absolute;
-      bottom: 30px;
-      right: 30px;
-      width: 100px;
-      height: 80px;
-      line-height: 80px;
-      font-size: 20px;
-      border: 1px solid #e6e6e6;
-      border-radius: 5px;
       z-index: 2;
     }
   }
@@ -93,34 +110,117 @@
     position: relative;
     width: 100%;
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     img {
       display: block;
-      width: 100%;
+      height: 100vh;
     }
-    .position {
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      &.position-1 {
-        left: 50px;
-        top: 50px;
-        background: red;
-      }
-      &.position-2 {
-        left: 150px;
-        top: 250px;
-        background: black;
-      }
-      &.position-3 {
-        right: 50;
-        bottom: 150px;
-        background: yellow;
-      }
-      &.position-4 {
-        right: 50;
-        bottom: 150px;
-        background: green;
-      }
+  }
+  .position-container {
+    position: relative;
+    z-index: 99;
+    .close-btn {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      font-size: 30px;
+      z-index: 99;
     }
+  }
+  .img-container-w {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      display: block;
+      width: 100vw;
+    }
+  }
+  .btn {
+    position: absolute;
+  }
+  .btn-1 {
+    left: 29.5%;
+    top: 10%;
+    width: 2.5%;
+    height: 61.5%;
+  }
+  .btn-2-1 {
+    left: 29.5%;
+    top: 73%;
+    width: 2.5%;
+    height: 17.5%;
+  }
+  .btn-2-2 {
+    left: 32%;
+    top: 85%;
+    width: 10.5%;
+    height: 5.5%;
+  }
+  .btn-3 {
+    left: 41%;
+    top: 23%;
+    width: 16.7%;
+    height: 5.7%;
+  }
+  .btn-4 {
+    left: 41%;
+    top: 32.5%;
+    width: 12.3%;
+    height: 5.5%;
+  }
+
+  .btn-5 {
+    left: 53.3%;
+    top: 32.5%;
+    width: 2.5%;
+    height: 27%;
+  }
+  .btn-6 {
+    left: 41%;
+    top: 54%;
+    width: 12.3%;
+    height: 5.5%;
+  }
+  .btn-7 {
+    left: 41%;
+    top: 63.4%;
+    width: 16.7%;
+    height: 5.5%;
+  }
+  .btn-8 {
+    left: 43%;
+    top: 85%;
+    width: 13.2%;
+    height: 5.5%;
+  }
+  .btn-9 {
+    left: 57.7%;
+    top: 28.5%;
+    width: 2.5%;
+    height: 35%;
+  }
+  .btn-10 {
+    left: 66.5%;
+    top: 10.5%;
+    width: 3%;
+    height: 59%;
+  }
+  .btn-11 {
+    left: 59.4%;
+    top: 71.2%;
+    width: 10%;
+    height: 5.4%;
+  }
+  .btn-12 {
+    left: 59.4%;
+    top: 78.5%;
+    width: 10%;
+    height: 5.4%;
   }
 </style>

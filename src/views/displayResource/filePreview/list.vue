@@ -1,6 +1,17 @@
 <template>
   <div class="list-container">
-    <el-button type="primary" @click="toPage('/home')">返回</el-button>
+    <img :src="bgUrl" class="bg" />
+    <el-button
+      type="primary"
+      style="position: relative"
+      @click="
+        toPage('/home', {
+          index: 1,
+        })
+      "
+    >
+      返回
+    </el-button>
     <template v-if="pageList.length">
       <div class="list-cells">
         <div
@@ -13,24 +24,27 @@
             })
           "
         >
-          <div class="img-container">
+          <div class="file-container">
             <img :src="item.imgUrl" />
           </div>
           <p class="title">{{ item.fileName }}</p>
-          <div class="btn-group">
-            <el-button type="text">查看</el-button>
-          </div>
         </div>
       </div>
       <div class="page">
-        <el-button type="primary">开始轮播</el-button>
-        <el-pagination
-          @current-change="handleCurrentChange"
-          :current-page.sync="currentPage"
-          :page-size="6"
-          layout="total, prev, pager, next"
-          :total="total"
-        ></el-pagination>
+        <el-button
+          type="primary"
+          v-if="currentPage > 1"
+          @click="handleCurrentChange(currentPage - 1)"
+        >
+          上一页
+        </el-button>
+        <el-button
+          type="primary"
+          v-if="currentPage < pageCount"
+          @click="handleCurrentChange(currentPage + 1)"
+        >
+          下一页
+        </el-button>
       </div>
     </template>
     <template v-else>
@@ -40,9 +54,12 @@
 </template>
 <script>
   import { parserPageList } from '@/utils/common'
-  import wordImg from '../../../assets/images/word.png'
-  import excelImg from '../../../assets/images/excel.png'
-  import pptImg from '../../../assets/images/ppt.png'
+  import wordImg from '@/assets/images/word.png'
+  import excelImg from '@/assets/images/excel.png'
+  import pptImg from '@/assets/images/ppt.png'
+  import DFLZ from '@/assets/images/dflz-bg.png'
+  import NKAF from '@/assets/images/nkaf-bg.png'
+  import common from '@/mixins/common'
   const imgOpt = {
     docx: wordImg,
     pptx: pptImg,
@@ -50,6 +67,7 @@
   }
   export default {
     name: 'filePreviewList',
+    mixins: [common],
     data() {
       const resourceList = this.$store.state.resourceList.map((item) => {
         const list = item.file.split('.')
@@ -63,13 +81,15 @@
         pageList: parserPageList(resourceList), // 分页总数据
       }
     },
-    methods: {
-      toPage(path, query) {
-        this.$router.push({
-          path,
-          query,
-        })
+    computed: {
+      bgUrl() {
+        return this.$route.query.type == 2 ? NKAF : DFLZ
       },
+      pageCount() {
+        return Math.ceil(this.total / 6)
+      },
+    },
+    methods: {
       handleCurrentChange(pageIndex) {
         this.currentPage = pageIndex
         this.getPageData()
@@ -84,8 +104,5 @@
   }
 </script>
 <style scoped lang="scss">
-  @import '@/style/list.scss';
-  .list-container {
-    background: white;
-  }
+  @import '../style.scss';
 </style>

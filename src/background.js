@@ -22,8 +22,8 @@ async function handleDialogOpen(event, opt) {
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 894,
-    height: 519,
+    width: 1920,
+    height: 1080,
     // frame: false,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -44,7 +44,7 @@ async function createWindow() {
     win.loadURL('app://./index.html')
   }
   // 关闭菜单栏
-  Menu.setApplicationMenu(null)
+  // Menu.setApplicationMenu(null)
 }
 
 // Quit when all windows are closed.

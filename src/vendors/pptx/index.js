@@ -83,7 +83,7 @@ const renderPptx = (pptx, resultElement, thumbElement) => {
       const slidesWidth = Math.max(...Array.from($wrapper.children('section')).map(s => s.offsetWidth))
       const wrapperWidth = $wrapper[0].offsetWidth
       $wrapper.css({
-        'transform': `scale(${wrapperWidth / slidesWidth})`,
+        'transform': `scaleX(${wrapperWidth / slidesWidth})`,
         'transform-origin': 'top left'
       })
     }

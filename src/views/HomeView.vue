@@ -2,40 +2,21 @@
   <div class="home">
     <swiper :options="swiperOption" ref="swiper">
       <swiper-slide>
-        <div class="company">
-          <div class="title">
-            <div
-              class="logo"
-              @touchstart.stop="handlerTouchstart"
-              @touchmove="handlerTouchmove"
-              @touchend="handlerTouchend"
-              @click="manageVisible = true"
-            >
-              <img class="logo" src="../assets/logo.png" />
-            </div>
-            <div class="welcome">
-              <img src="../assets/logo.png" />
-            </div>
-          </div>
-          <div class="company-content">
-            <img src="../assets/logo.png" @click="toPage('/display3D')" />
-          </div>
-        </div>
+        <img src="../assets/images/first.png" />
+        <div
+          class="logo"
+          @touchstart.stop="handlerTouchstart"
+          @touchmove="handlerTouchmove"
+          @touchend="handlerTouchend"
+          @click="manageVisible = true"
+        ></div>
       </swiper-slide>
       <swiper-slide>
-        <div class="resource">
-          <img src="../assets/images/2.jpg" @click="handleResourceClick(1)" />
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="resource">
-          <img src="../assets/images/3.jpg" @click="handleResourceClick(2)" />
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="sign">
-          <img src="../assets/images/4.png" @click="toPage('signLeader')" />
-        </div>
+        <img src="../assets/images/second.png" />
+        <div class="btn btn-1" @click="toPage('/display3D')"></div>
+        <div class="btn btn-2" @click="handleResourceClick(1)"></div>
+        <div class="btn btn-3" @click="handleResourceClick(2)"></div>
+        <div class="btn btn-4" @click="toPage('signLeader')"></div>
       </swiper-slide>
     </swiper>
     <el-dialog
@@ -70,13 +51,14 @@
     data() {
       return {
         swiperOption: {
+          initialSlide: this.$route.query.index || 0,
           //自动播放
-          autoplay: {
-            delay: 5000,
-            stopOnLastSlide: false,
-            /* 触摸滑动后是否继续轮播 */
-            disableOnInteraction: false,
-          },
+          // autoplay: {
+          //   delay: 5000,
+          //   stopOnLastSlide: false,
+          //   /* 触摸滑动后是否继续轮播 */
+          //   disableOnInteraction: false,
+          // },
           //滑动速度
           speed: 500,
           //小手掌抓取滑动
@@ -173,7 +155,12 @@
         })
       },
       handleResourceClick(name) {
+        console.log(name)
         const { type, list } = this.resource[name]
+        if (!list.length) {
+          this.$alert('没有轮播展示！', '提示')
+          return
+        }
         this.$store.commit('setResourceList', list)
         let path = ''
         let query = {}
@@ -188,6 +175,7 @@
               poster: list[0].imgUrl,
             }
           }
+          query.type = name
         } else if (type === 'file') {
           path = '/displayResource/filePreviewList'
           if (list.length === 1) {
@@ -196,6 +184,7 @@
               url: list[0].path,
             }
           }
+          query.type = name
         }
         console.log(path, this.$store.state.resourceList)
         this.toPage(path, query)
@@ -213,58 +202,66 @@
 <style scoped lang="scss">
   .swiper-container::v-deep {
     .swiper-slide {
+      position: relative;
       width: 100vw;
       height: 100vh;
-    }
-  }
-  .company {
-    padding: 30px;
-    .title {
-      display: flex;
-      align-items: center;
-      .logo {
-        user-select: none;
-        width: 80px;
-        height: 80px;
-        background: white;
-        img {
-          display: block;
-          width: 100%;
-          height: 100%;
-        }
-      }
-      .welcome {
-        margin-left: 15px;
-        width: calc(100vw - 60px - 15px - 80px);
-        height: 80px;
-        background: white;
-        img {
-          display: block;
-          height: 100%;
-        }
-      }
-    }
-    .company-content {
-      margin-top: 30px;
-      width: calc(100vw - 60px);
-      height: calc(100vh - 60px - 80px - 30px);
-      background-color: white;
-      img {
+      & > img {
         display: block;
         width: 100%;
-        height: 100%;
       }
     }
   }
-  .resource,
-  .sign {
-    padding: 30px;
-    width: calc(100vw - 60px);
-    height: calc(100vh - 60px);
+  .logo {
+    position: absolute;
+    left: 4%;
+    top: 7%;
+    user-select: none;
+    width: 17%;
+    height: 8%;
     img {
       display: block;
       width: 100%;
       height: 100%;
     }
+  }
+  .welcome {
+    margin-left: 15px;
+    width: calc(100vw - 60px - 15px - 80px);
+    height: 80px;
+    background: white;
+    img {
+      display: block;
+      height: 100%;
+    }
+  }
+  .company-content {
+    margin-top: 30px;
+    width: calc(100vw - 60px);
+    height: calc(100vh - 60px - 80px - 30px);
+    background-color: white;
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .btn {
+    position: absolute;
+    left: 0;
+    top: 40%;
+    width: 18%;
+    height: 39%;
+  }
+  .btn-1 {
+    left: 8%;
+  }
+  .btn-2 {
+    left: 30%;
+  }
+  .btn-3 {
+    left: 52%;
+  }
+  .btn-4 {
+    left: 74%;
   }
 </style>
