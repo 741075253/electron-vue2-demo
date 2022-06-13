@@ -14,6 +14,7 @@
     </el-button>
     <div class="sign-content">
       <vue-esign
+        v-if="signWidth"
         ref="esign"
         :width="signWidth"
         :height="signHeight"
@@ -23,8 +24,8 @@
         :bgColor.sync="bgColor"
       />
     </div>
-    <div class="btn btn-1" @click="handleReset">重置</div>
-    <div class="btn btn-2" @click="handleGenerate">保存</div>
+    <div class="btn btn-1" @click="handleReset"></div>
+    <div class="btn btn-2" @click="handleGenerate"></div>
   </div>
 </template>
 <script>
@@ -36,14 +37,13 @@
     components: { vueEsign },
     mixins: [common],
     data() {
-      const $body = document.body
       return {
         lineWidth: 6,
         lineColor: '#000000',
         bgColor: '',
         isCrop: false,
-        signWidth: $body.clientWidth * 0.8,
-        signHeight: $body.clientHeight * 0.5,
+        signWidth: 0,
+        signHeight: 0,
       }
     },
     methods: {
@@ -70,8 +70,9 @@
     },
     mounted() {
       this.$nextTick(() => {
-        this.signWidth = document.body.clientWidth * 0.8
-        this.signHeight = document.body.clientHeight * 0.5
+        const signContent = document.querySelector('.sign-content')
+        this.signWidth = signContent.clientWidth
+        this.signHeight = signContent.clientHeight
       })
     },
   }
@@ -83,7 +84,7 @@
     height: 100vh;
     & > img {
       display: block;
-      widows: 100%;
+      width: 100%;
       height: 100%;
     }
   }
@@ -96,24 +97,24 @@
   }
   .sign-content {
     position: absolute;
-    left: 10%;
-    top: 20%;
-    width: 80%;
-    height: 50%;
+    left: 7%;
+    top: 29%;
+    width: 86%;
+    height: 57%;
   }
   .btn {
     position: absolute;
     right: 10%;
-    bottom: 10%;
+    bottom: 5%;
     width: 10vw;
     height: 10vw;
     border-radius: 100%;
-    background: gray;
+    background: transparent;
   }
   .btn-1 {
-    right: 30%;
+    right: 15%;
   }
   .btn-2 {
-    right: 10%;
+    right: 2%;
   }
 </style>

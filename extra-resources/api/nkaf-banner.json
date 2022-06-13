@@ -1,10 +1,18 @@
 [
   {
     "id": 0,
-    "fileName": "img",
+    "fileName": "图片",
     "isAdd": false,
-    "file": "img.jpg",
-    "path": "E:\\workspace\\electron-vue2-demo\\extra-resources\\nkaf\\img/img.jpg",
-    "type": "img"
+    "file": "图片.docx",
+    "path": "E:\\workspace\\electron-vue2-demo\\extra-resources\\nkaf\\file/图片.docx",
+    "type": "file"
+  },
+  {
+    "id": 4,
+    "fileName": "测试文档 - 副本 (2)",
+    "isAdd": false,
+    "file": "测试文档 - 副本 (2).docx",
+    "path": "E:\\workspace\\electron-vue2-demo\\extra-resources\\nkaf\\file/测试文档 - 副本 (2).docx",
+    "type": "file"
   }
 ]

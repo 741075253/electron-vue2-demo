@@ -1,0 +1,37 @@
+{
+  "id": "3462848",
+  "name": "jiaotong-bank",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "715418",
+      "name": "info",
+      "font_class": "info",
+      "unicode": "e67d",
+      "unicode_decimal": 59005
+    },
+    {
+      "icon_id": "4936511",
+      "name": "warning-circle-fill",
+      "font_class": "warning-circle-fill",
+      "unicode": "e848",
+      "unicode_decimal": 59464
+    },
+    {
+      "icon_id": "29649899",
+      "name": "error",
+      "font_class": "error",
+      "unicode": "ed4f",
+      "unicode_decimal": 60751
+    },
+    {
+      "icon_id": "15838444",
+      "name": "close",
+      "font_class": "close",
+      "unicode": "e668",
+      "unicode_decimal": 58984
+    }
+  ]
+}

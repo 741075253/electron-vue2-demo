@@ -1,10 +1,14 @@
 [
   {
     "id": 0,
-    "fileName": "img",
+    "imgUrl": "E:\\workspace\\electron-vue2-demo\\extra-resources\\dflz\\posters\\1.mp4.jpg",
+    "file": "1.mp4",
+    "fileName": "1",
     "isAdd": false,
-    "file": "img.jpg",
-    "path": "E:\\workspace\\electron-vue2-demo\\extra-resources\\dflz\\img/img.jpg",
-    "type": "img"
+    "path": "E:\\workspace\\electron-vue2-demo\\extra-resources\\dflz\\video\\1.mp4",
+    "name": "1",
+    "duration": "00:52",
+    "current": 0,
+    "type": "video"
   }
 ]

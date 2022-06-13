@@ -33,18 +33,18 @@
 </template>
 <script>
   import common from '@/mixins/common'
-  import Img1 from '@/assets/images/3d/1.jpg'
-  import Img2 from '@/assets/images/3d/2.jpg'
-  import Img3 from '@/assets/images/3d/3.jpg'
-  import Img4 from '@/assets/images/3d/4.jpg'
-  import Img5 from '@/assets/images/3d/5.jpg'
-  import Img6 from '@/assets/images/3d/6.jpg'
-  import Img7 from '@/assets/images/3d/7.jpg'
-  import Img8 from '@/assets/images/3d/8.jpg'
-  import Img9 from '@/assets/images/3d/9.jpg'
-  import Img10 from '@/assets/images/3d/10.jpg'
-  import Img11 from '@/assets/images/3d/11.jpg'
-  import Img12 from '@/assets/images/3d/12.jpg'
+  import Img1 from '@/assets/images/3d/1.png'
+  import Img2 from '@/assets/images/3d/2.png'
+  import Img3 from '@/assets/images/3d/3.png'
+  import Img4 from '@/assets/images/3d/4.png'
+  import Img5 from '@/assets/images/3d/5.png'
+  import Img6 from '@/assets/images/3d/6.png'
+  import Img7 from '@/assets/images/3d/7.png'
+  import Img8 from '@/assets/images/3d/8.png'
+  import Img9 from '@/assets/images/3d/9.png'
+  import Img10 from '@/assets/images/3d/10.png'
+  import Img11 from '@/assets/images/3d/11.png'
+  import Img12 from '@/assets/images/3d/12.png'
   const imgOpt = {
     1: Img1,
     2: Img2,
@@ -131,96 +131,96 @@
   }
   .img-container-w {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     img {
       display: block;
-      width: 100vw;
+      width: 100%;
     }
   }
   .btn {
     position: absolute;
   }
   .btn-1 {
-    left: 29.5%;
-    top: 10%;
-    width: 2.5%;
-    height: 61.5%;
+    left: 26%;
+    top: 11%;
+    width: 3%;
+    height: 60.5%;
   }
   .btn-2-1 {
-    left: 29.5%;
+    left: 26%;
     top: 73%;
-    width: 2.5%;
+    width: 3%;
     height: 17.5%;
   }
   .btn-2-2 {
-    left: 32%;
+    left: 26%;
     top: 85%;
-    width: 10.5%;
+    width: 15%;
     height: 5.5%;
   }
   .btn-3 {
-    left: 41%;
+    left: 39.3%;
     top: 23%;
-    width: 16.7%;
+    width: 19.8%;
     height: 5.7%;
   }
   .btn-4 {
-    left: 41%;
+    left: 39.3%;
     top: 32.5%;
-    width: 12.3%;
+    width: 14.5%;
     height: 5.5%;
   }
 
   .btn-5 {
-    left: 53.3%;
+    left: 53.8%;
     top: 32.5%;
-    width: 2.5%;
+    width: 3%;
     height: 27%;
   }
   .btn-6 {
-    left: 41%;
+    left: 39.3%;
     top: 54%;
-    width: 12.3%;
+    width: 14.5%;
     height: 5.5%;
   }
   .btn-7 {
-    left: 41%;
+    left: 39.3%;
     top: 63.4%;
-    width: 16.7%;
+    width: 19.8%;
     height: 5.5%;
   }
   .btn-8 {
-    left: 43%;
+    left: 41.8%;
     top: 85%;
-    width: 13.2%;
+    width: 15.5%;
     height: 5.5%;
   }
   .btn-9 {
-    left: 57.7%;
+    left: 59%;
     top: 28.5%;
-    width: 2.5%;
+    width: 3%;
     height: 35%;
   }
   .btn-10 {
-    left: 66.5%;
+    left: 69.8%;
     top: 10.5%;
     width: 3%;
     height: 59%;
   }
   .btn-11 {
-    left: 59.4%;
+    left: 61%;
     top: 71.2%;
-    width: 10%;
+    width: 12%;
     height: 5.4%;
   }
   .btn-12 {
-    left: 59.4%;
+    left: 61%;
     top: 78.5%;
-    width: 10%;
+    width: 12%;
     height: 5.4%;
   }
 </style>
