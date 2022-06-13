@@ -112,7 +112,7 @@
 <style scoped lang="scss">
   .manage {
     text-align: center;
-    background: url('@/assets/images/manage-bg.png');
+    background: url('@/assets/images/manage-bg.png') no-repeat 100%;
     width: 100vw;
     height: 100vh;
     overflow: hidden;

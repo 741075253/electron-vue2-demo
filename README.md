@@ -1,4 +1,4 @@
-# electron-vue2-demo
+# bocom-admin
 
 ## Project setup
 ```

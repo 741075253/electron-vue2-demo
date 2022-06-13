@@ -22,6 +22,7 @@ async function handleDialogOpen(event, opt) {
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
+    title: '交通银行',
     width: 1280,
     height: 720,
     // frame: false,

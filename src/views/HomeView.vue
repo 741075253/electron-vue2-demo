@@ -52,6 +52,7 @@
       return {
         swiperOption: {
           initialSlide: this.$route.query.index || 0,
+          autoplay: false,
           //自动播放
           // autoplay: {
           //   delay: 5000,
