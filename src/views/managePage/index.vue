@@ -1,6 +1,7 @@
 <template>
   <div class="manage">
-    <el-container>
+    <img src="@/assets/images/manage-bg.png" class="bg" />
+    <el-container style="position: relative; z-index: 1">
       <el-header>
         <div class="back-btn" @click="toPage('/home')">
           <i class="iconfont icon-backward"></i>
@@ -114,10 +115,17 @@
 <style scoped lang="scss">
   .manage {
     text-align: center;
-    background: url('@/assets/images/manage-bg.png') no-repeat 100%;
+    // background: url('../../assets/images/manage-bg.png') no-repeat 100%;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    .bg {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
   }
   .el-header {
     position: relative;

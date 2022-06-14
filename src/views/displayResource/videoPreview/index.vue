@@ -9,21 +9,19 @@
 
 <script>
   import Player from 'xgplayer'
+  import common from '@/mixins/common'
   export default {
     name: 'videoPreview',
+    mixins: [common],
     data() {
       return {
         player: null,
       }
     },
     created() {
-      console.log(window.electronApi.translatePath(this.$route.query.poster))
       this.init()
     },
     methods: {
-      toPage(path) {
-        this.$router.push({ path })
-      },
       init() {
         this.$nextTick(() => {
           this.player = new Player({
@@ -37,6 +35,7 @@
             playbackRate: [0.5, 0.75, 1, 1.5, 2],
             height: window.innerHeight,
             width: window.innerWidth,
+            fullscreen: true,
           })
         })
       },
@@ -50,6 +49,10 @@
 <style scoped lang="scss">
   .video {
     position: relative;
+    background: #e6e6e6;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
   }
   .back-btn {
     z-index: 99999;

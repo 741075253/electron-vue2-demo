@@ -70,7 +70,7 @@
         total: resourceList.length,
         currentPage: 1,
         fileList: [], // 分页数据
-        pageList: parserPageList(resourceList), // 分页总数据
+        pageList: [], // 分页总数据
       }
     },
     computed: {
@@ -91,6 +91,9 @@
       },
     },
     mounted() {
+      const resourceList = this.$store.state.resourceList || []
+      console.log(resourceList)
+      this.pageList = parserPageList([...resourceList]) // 分页总数据
       this.getPageData()
     },
   }

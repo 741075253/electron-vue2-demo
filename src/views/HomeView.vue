@@ -154,7 +154,6 @@
         })
       },
       handleResourceClick(name) {
-        console.log(name)
         const { type, list } = this.resource[name]
         if (!list.length) {
           this.$alert('没有轮播展示！', '提示')

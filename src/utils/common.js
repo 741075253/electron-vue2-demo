@@ -12,6 +12,7 @@ export function parserPageList(data, pageSize = 6) {
   if (!data || !data.length) {
     return []
   }
+  data = [...data]
   const list = []
   while (data.length) {
     list.push(data.splice(0, pageSize))
