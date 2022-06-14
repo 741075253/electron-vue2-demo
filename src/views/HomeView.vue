@@ -2,13 +2,13 @@
   <div class="home">
     <swiper :options="swiperOption" ref="swiper">
       <swiper-slide>
-        <img src="../assets/images/first.png" />
+        <img @dblclick.stop="setFullscreen" src="../assets/images/first.png" />
         <div
           class="logo"
           @touchstart.stop="handlerTouchstart"
           @touchmove="handlerTouchmove"
           @touchend="handlerTouchend"
-          @click="manageVisible = true"
+          @click.stop="manageVisible = true"
         ></div>
       </swiper-slide>
       <swiper-slide>
@@ -42,8 +42,10 @@
 <script>
   import 'swiper/dist/css/swiper.css'
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
+  import common from '@/mixins/common'
   export default {
     name: 'homeView',
+    mixins: [common],
     components: {
       swiper,
       swiperSlide,
@@ -91,12 +93,8 @@
       },
     },
     methods: {
-      toPage(path, query = {}) {
-        console.log(path)
-        this.$router.push({
-          path,
-          query,
-        })
+      setFullscreen() {
+        window.electronApi.setFullScreen()
       },
       clearTimer() {
         if (this.longTimer) {

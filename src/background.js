@@ -26,6 +26,7 @@ async function createWindow() {
     width: 1280,
     height: 720,
     // frame: false,
+    fullscreen: true,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
@@ -76,6 +77,11 @@ app.on('ready', async () => {
     }
   }
   ipcMain.handle('dialog:openDialog', handleDialogOpen)
+  ipcMain.on('setFullScreen', (event) => {
+    const webContents = event.sender
+    const win = BrowserWindow.fromWebContents(webContents)
+    win.setFullScreen(!win.isFullScreen())
+  })
   createWindow()
 })
 

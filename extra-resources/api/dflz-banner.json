@@ -1,11 +1,11 @@
 [
   {
     "id": 0,
-    "imgUrl": "E:\\workspace\\electron-vue2-demo\\extra-resources\\dflz\\posters\\1.mp4.jpg",
+    "imgUrl": "E:\\workspace\\bocom-admin\\extra-resources\\dflz\\posters\\1.mp4.jpg",
     "file": "1.mp4",
     "fileName": "1",
     "isAdd": false,
-    "path": "E:\\workspace\\electron-vue2-demo\\extra-resources\\dflz\\video\\1.mp4",
+    "path": "E:\\workspace\\bocom-admin\\extra-resources\\dflz\\video\\1.mp4",
     "name": "1",
     "duration": "00:52",
     "current": 0,

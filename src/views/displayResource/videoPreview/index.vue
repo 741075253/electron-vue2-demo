@@ -1,11 +1,8 @@
 <template>
   <div class="video">
-    <el-button
-      type="primary"
-      @click="toPage('/displayResource/videoPreviewList')"
-    >
-      返回
-    </el-button>
+    <div class="back-btn" @click="toPage('/displayResource/videoPreviewList')">
+      <i class="iconfont icon-backward"></i>
+    </div>
     <div id="mse"></div>
   </div>
 </template>
@@ -53,11 +50,8 @@
 <style scoped lang="scss">
   .video {
     position: relative;
-    .el-button {
-      position: absolute;
-      left: 30px;
-      top: 30px;
-      z-index: 99999;
-    }
+  }
+  .back-btn {
+    z-index: 99999;
   }
 </style>

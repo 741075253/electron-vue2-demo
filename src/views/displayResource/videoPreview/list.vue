@@ -1,17 +1,16 @@
 <template>
   <div class="list-container">
     <img :src="bgUrl" class="bg" />
-    <el-button
+    <div
       class="back-btn"
-      type="primary"
       @click="
         toPage('/home', {
           index: 1,
         })
       "
     >
-      返回
-    </el-button>
+      <i class="iconfont icon-backward"></i>
+    </div>
     <template v-if="pageList.length">
       <div class="list-cells">
         <div

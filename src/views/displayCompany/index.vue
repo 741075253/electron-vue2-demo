@@ -1,12 +1,15 @@
 <template>
   <div class="img-content">
-    <el-button
-      type="primary"
+    <div
       class="back-btn"
-      @click="toPage('/home', { index: 1 })"
+      @click="
+        toPage('/home', {
+          index: 1,
+        })
+      "
     >
-      返回
-    </el-button>
+      <i class="iconfont icon-backward"></i>
+    </div>
     <div class="img-container" v-if="type == 1">
       <img src="../../assets/images/3d/base.jpg" />
       <div class="btn btn-1" @click="handleTypeChange(2, 1)"></div>
@@ -24,7 +27,10 @@
       <div class="btn btn-12" @click="handleTypeChange(2, 12)"></div>
     </div>
     <div class="position-container" v-else>
-      <i class="el-icon-close close-btn" @click="handleTypeChange(1)"></i>
+      <i
+        class="iconfont icon-roundclose close-btn"
+        @click="handleTypeChange(1)"
+      ></i>
       <div class="img-container-w">
         <img :src="images[0]" />
       </div>
@@ -97,14 +103,11 @@
   }
 </script>
 <style scoped lang="scss">
+  .back-btn {
+    color: #333;
+  }
   .img-content {
     position: relative;
-    .back-btn {
-      position: absolute;
-      left: 30px;
-      top: 30px;
-      z-index: 2;
-    }
   }
   .img-container {
     position: relative;

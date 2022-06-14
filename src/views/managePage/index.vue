@@ -2,7 +2,9 @@
   <div class="manage">
     <el-container>
       <el-header>
-        <el-button class="back-btn" @click="toPage('/home')">返回</el-button>
+        <div class="back-btn" @click="toPage('/home')">
+          <i class="iconfont icon-backward"></i>
+        </div>
         <div class="title">资源中心</div>
       </el-header>
       <el-container class="manage-container">
@@ -122,13 +124,7 @@
     padding: 0;
     height: 80px !important;
     line-height: 80px;
-    .back-btn {
-      position: absolute;
-      left: 30px;
-      top: 20px;
-      height: 40px;
-      width: 100px;
-    }
+
     .title {
       font-size: 40px;
       font-weight: bolder;

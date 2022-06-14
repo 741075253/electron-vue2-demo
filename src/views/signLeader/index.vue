@@ -1,17 +1,16 @@
 <template>
   <div class="sign">
     <img src="@/assets/images/sign.png" />
-    <el-button
+    <div
       class="back-btn"
-      type="primary"
       @click="
         toPage('/home', {
           index: 1,
         })
       "
     >
-      返回
-    </el-button>
+      <i class="iconfont icon-roundclose"></i>
+    </div>
     <div class="sign-content">
       <vue-esign
         v-if="signWidth"
@@ -89,11 +88,9 @@
     }
   }
   .back-btn {
-    position: absolute;
-    left: 0;
+    left: auto;
+    right: 30px;
     top: 20px;
-    height: 40px;
-    width: 100px;
   }
   .sign-content {
     position: absolute;

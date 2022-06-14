@@ -100,6 +100,9 @@ contextBridge.exposeInMainWorld('electronApi', {
   translatePath: (url) => {
     return url.split(path.sep).join('/')
   },
+  setFullScreen: () => {
+    ipcRenderer.send('setFullScreen')
+  },
 })
 
 function getExtraResourcesPath(filename) {
