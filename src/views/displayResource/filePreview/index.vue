@@ -2,7 +2,7 @@
   <div :class="{ hidden }">
     <div class="container">
       <div class="back-btn" @click="back">
-        <i class="iconfont icon-roundclose"></i>
+        <i class="iconfont icon-backward"></i>
       </div>
       <div v-show="loading" class="well loading">正在加载中，请耐心等待...</div>
       <div v-show="!loading" class="well" ref="output"></div>
@@ -121,9 +121,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .back-btn {
-    left: auto;
-    right: 15px;
-    top: 15px;
     color: #333;
     z-index: 999999;
   }

@@ -10,7 +10,32 @@
       </el-header>
       <el-container class="manage-container">
         <el-aside width="200px">
-          <div class="menu">
+          <el-menu
+            :default-active="code"
+            :unique-opened="true"
+            @select="handleMenuSelect"
+          >
+            <el-submenu
+              v-for="item in menuData"
+              :key="item.value"
+              :index="item.value"
+            >
+              <template slot="title">
+                <i :class="item.icon"></i>
+                <span>{{ item.label }}</span>
+              </template>
+              <template v-if="item.children && item.children.length">
+                <el-menu-item
+                  v-for="child in item.children"
+                  :key="child.value"
+                  :index="child.value"
+                >
+                  {{ child.label }}
+                </el-menu-item>
+              </template>
+            </el-submenu>
+          </el-menu>
+          <!-- <div class="menu">
             <div class="menu-cell">党建资源管理</div>
             <div class="menu">
               <div
@@ -74,7 +99,7 @@
                 签名管理
               </div>
             </div>
-          </div>
+          </div> -->
         </el-aside>
         <el-main>
           <component v-bind:is="pageName" :type="type"></component>
@@ -85,6 +110,71 @@
 </template>
 
 <script>
+  const menuData = [
+    {
+      label: '党建管理',
+      value: '1',
+      icon: 'iconfont icon-dangjian_dangzhangdanggui',
+      children: [
+        {
+          label: '视频管理',
+          value: '1-1',
+          component: 'VideoManage',
+          type: '1',
+        },
+        {
+          label: '图片管理',
+          value: '1-2',
+          component: 'ImgManage',
+          type: '1',
+        },
+        {
+          label: '文件管理',
+          value: '1-3',
+          component: 'FileManage',
+          type: '1',
+        },
+      ],
+    },
+    {
+      label: '内控管理',
+      value: '2',
+      icon: 'iconfont icon-minganfangkong',
+      children: [
+        {
+          label: '视频管理',
+          value: '2-1',
+          component: 'VideoManage',
+          type: '2',
+        },
+        {
+          label: '图片管理',
+          value: '2-2',
+          component: 'ImgManage',
+          type: '2',
+        },
+        {
+          label: '文件管理',
+          value: '2-3',
+          component: 'FileManage',
+          type: '2',
+        },
+      ],
+    },
+    {
+      label: '签名管理',
+      value: '3',
+      icon: 'iconfont icon-dianziqianmingx',
+      children: [
+        {
+          label: '电子签名',
+          value: '3-1',
+          component: 'SignManage',
+          type: '3',
+        },
+      ],
+    },
+  ]
   import common from '@/mixins/common'
   export default {
     name: 'managePage',
@@ -98,8 +188,9 @@
     },
     data() {
       return {
+        menuData: menuData,
         pageName: 'VideoManage',
-        code: 1,
+        code: '1-1',
         type: '1', // 资源管理类型 1党建 2内控
       }
     },
@@ -109,11 +200,23 @@
         this.type = type || ''
         this.code = code
       },
+      handleMenuSelect(index) {
+        const parentVal = index.split('-')[0]
+        const parent = this.menuData.find((item) => item.value == parentVal)
+        if (parent) {
+          const child = parent?.children.find((item) => item.value == index)
+          if (child) {
+            this.type = child.type
+            this.pageName = child.component
+          }
+        }
+      },
     },
   }
 </script>
 <style scoped lang="scss">
   .manage {
+    position: relative;
     text-align: center;
     // background: url('../../assets/images/manage-bg.png') no-repeat 100%;
     width: 100vw;
@@ -127,38 +230,58 @@
       height: 100%;
     }
   }
+  .back-btn {
+    color: #333;
+  }
   .el-header {
     position: relative;
     padding: 0;
     height: 80px !important;
     line-height: 80px;
 
+    // background: linear-gradient(to right, #0248f8, #5583f7);
     .title {
       font-size: 40px;
       font-weight: bolder;
       margin-bottom: 10px;
-      color: white;
+      color: #333;
     }
   }
   .el-aside {
     overflow-y: auto;
     height: 100vh;
   }
+  .el-menu::v-deep {
+    border-right: 0;
+    background-color: transparent;
+    .el-menu {
+      background-color: transparent;
+    }
+    .el-submenu__title {
+      .iconfont {
+        color: #303133;
+      }
+      & > span {
+        margin-left: 10px;
+      }
+    }
+  }
   .menu {
     padding-left: 30px;
     .menu-cell {
+      box-sizing: border-box;
+      position: relative;
       padding: 0 10px;
-      width: 100px;
+      width: 120px;
       height: 40px;
       line-height: 40px;
       border-radius: 2px;
-      background: white;
-      color: #333;
+      color: white;
       font-weight: bold;
       font-size: 16px;
       cursor: pointer;
+      border-radius: 40px;
       &.active {
-        background: #b3d8ff;
       }
       & + .menu-cell {
         margin-top: 15px;
@@ -169,13 +292,18 @@
     }
     & > .menu {
       margin-top: 15px;
+      // height: 0;
+      &.active {
+        height: auto;
+        transition: 0.3 all ease-in;
+      }
     }
   }
   .el-main {
     margin-right: 30px;
     width: calc(100vw - 230px);
     height: calc(100vh - 120px);
-    background-color: white;
+    background-color: transparent;
     border-radius: 5px;
   }
 </style>

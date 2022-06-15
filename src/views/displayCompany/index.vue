@@ -28,7 +28,7 @@
     </div>
     <div class="position-container" v-else>
       <i
-        class="iconfont icon-roundclose close-btn"
+        class="iconfont icon-backward close-btn"
         @click="handleTypeChange(1)"
       ></i>
       <div class="img-container-w">
@@ -126,9 +126,9 @@
     z-index: 99;
     .close-btn {
       position: fixed;
-      top: 30px;
-      right: 30px;
-      font-size: 30px;
+      bottom: 10px;
+      left: 30px;
+      font-size: 40px;
       z-index: 99;
     }
   }

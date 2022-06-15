@@ -1,16 +1,6 @@
 <template>
   <div class="sign">
     <img src="@/assets/images/sign.png" />
-    <div
-      class="back-btn"
-      @click="
-        toPage('/home', {
-          index: 1,
-        })
-      "
-    >
-      <i class="iconfont icon-roundclose"></i>
-    </div>
     <div class="sign-content">
       <vue-esign
         v-if="signWidth"
@@ -25,6 +15,14 @@
     </div>
     <div class="btn btn-1" @click="handleReset"></div>
     <div class="btn btn-2" @click="handleGenerate"></div>
+    <div
+      class="btn btn-3"
+      @click="
+        toPage('/home', {
+          index: 1,
+        })
+      "
+    ></div>
   </div>
 </template>
 <script>
@@ -87,11 +85,7 @@
       height: 100%;
     }
   }
-  .back-btn {
-    left: auto;
-    right: 30px;
-    top: 20px;
-  }
+
   .sign-content {
     position: absolute;
     left: 7%;
@@ -113,5 +107,8 @@
   }
   .btn-2 {
     right: 2%;
+  }
+  .btn-3 {
+    right: 28.5%;
   }
 </style>

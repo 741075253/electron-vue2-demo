@@ -92,8 +92,8 @@
     },
     mounted() {
       const resourceList = this.$store.state.resourceList || []
-      console.log(resourceList)
       this.pageList = parserPageList([...resourceList]) // 分页总数据
+      this.total = resourceList.length
       this.getPageData()
     },
   }

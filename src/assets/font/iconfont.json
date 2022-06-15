@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "13519371",
+      "name": "date",
+      "font_class": "date",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "15838429",
+      "name": "arrow-down",
+      "font_class": "arrow-down",
+      "unicode": "e665",
+      "unicode_decimal": 58981
+    },
+    {
+      "icon_id": "3585120",
+      "name": "电子签名@2x",
+      "font_class": "dianziqianmingx",
+      "unicode": "e8f6",
+      "unicode_decimal": 59638
+    },
+    {
+      "icon_id": "22833918",
+      "name": "命案防控",
+      "font_class": "minganfangkong",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "23245115",
+      "name": "党建_党章党规",
+      "font_class": "dangjian_dangzhangdanggui",
+      "unicode": "e675",
+      "unicode_decimal": 58997
+    },
+    {
       "icon_id": "29944",
       "name": "round_close",
       "font_class": "roundclose",

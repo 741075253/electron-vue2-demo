@@ -259,15 +259,28 @@
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
-          callback: (action) => {
+          callback: async (action) => {
             if (action === 'confirm') {
               const destPath = window.electronApi.getUrl(this.dirUrl)
-              nameList.forEach((name, index) => {
-                window.electronApi.copyFile(pathList[index], destPath, name)
-              })
-              this.$Message.success('上传成功')
-              this.currentPage = 1
-              this.getList()
+              let errList = []
+              for (let i = 0; i < nameList.length; i++) {
+                const name = nameList[i]
+                const info = await window.electronApi.copyFile(
+                  pathList[i],
+                  destPath,
+                  name
+                )
+                if (!info) {
+                  errList.push(info)
+                }
+              }
+              if (errList.length != nameList.length) {
+                this.$Message.success('上传成功')
+                this.currentPage = 1
+                this.getList()
+              } else {
+                this.$Message.error('上传失败, 请使用管理员权限')
+              }
             }
           },
         })

@@ -1,6 +1,5 @@
 .list-container {
   position: relative;
-  background: white no-repeat center 100%/100%;
   width: 100vw;
   height: 100vh;
 }
@@ -9,24 +8,20 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh;
-}
-
-.back-btn {
-  position: relative;
-  z-index: 99;
+  width: 100%;
+  height: 100%;
 }
 
 .list-cells {
   display: grid;
   grid-template-columns: repeat(3, 30%);
   grid-template-rows: repeat(2, 47%);
-  grid-column-gap: 20px;
+  grid-column-gap: 5%;
   grid-row-gap: 20px;
   text-align: center;
   position: relative;
-  margin: 8% auto 0;
+  margin: 0 auto;
+  top: 20%;
   width: 80vw;
   height: 50vh;
 
@@ -116,10 +111,10 @@
 }
 
 .page {
-  margin-right: 10%;
-  position: relative;
+  position: absolute;
+  right: 10%;
+  bottom: 20%;
   z-index: 1;
-  margin-top: 20px;
   text-align: right;
   display: flex;
   justify-content: flex-end;

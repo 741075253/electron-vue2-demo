@@ -129,16 +129,17 @@
         })
         if (result && result.length) {
           let errList = []
-          this.selectedList.forEach((item) => {
-            const info = window.electronApi.copyFile(
+          for (let i = 0; i < this.selectedList.length; i++) {
+            const item = this.selectedList[i]
+            const info = await window.electronApi.copyFile(
               item.baseUrl,
               result[0],
               item.file
             )
-            if (info) {
+            if (!info) {
               errList.push(info)
             }
-          })
+          }
           if (errList.length == this.selectedList.length) {
             this.$Message.error('下载失败，请使用管理员权限')
           } else {
@@ -155,19 +156,23 @@
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
-          callback: (action) => {
+          callback: async (action) => {
             if (action === 'confirm') {
               const imgUrlList = this.selectedList.map((item) => {
                 return item.url
               })
               const list = []
               imgUrlList.forEach((url) => {
-                list.push(window.electronApi.removeFile(url))
+                const err = window.electronApi.removeFile(url)
+                if (err) {
+                  list.push(err)
+                }
               })
               if (list.length === imgUrlList.length) {
                 this.$Message.error('删除失败, 请使用管理员权限')
               } else {
                 this.$Message.success('删除成功')
+                this.getList()
               }
             }
           },
