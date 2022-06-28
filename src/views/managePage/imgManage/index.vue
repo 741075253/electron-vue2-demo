@@ -8,7 +8,7 @@
           </div>
           <p class="title">{{ item.fileName }}</p>
           <div class="btn-group">
-            <el-button type="text" @click="addBanner(item, 'only')">
+            <el-button type="text" @click="addBanner(item, 'only', index)">
               播放当前
             </el-button>
             <el-button
@@ -118,7 +118,6 @@
             fileName: getFileName(file),
           }
         })
-        console.log('banner', data)
       },
       getBannerQueueList() {
         window.electronApi.readJson(this.apiUrl).then((data) => {
@@ -202,19 +201,29 @@
                 } else {
                   this.parseBanner(param)
                   this.getPageData()
-                  if (type == 'add') {
-                    this.fileList[index].isAdd = true
-                    this.pageList[this.currentPage - 1][index].isAdd = true
-                  } else if (type === 'delete') {
-                    this.fileList[index].isAdd = false
-                    this.pageList[this.currentPage - 1][index].isAdd = false
-                  }
+                  this.setIsAdd(type, index)
                   this.$Message.success(status + '成功')
                 }
               })
             }
           },
         })
+      },
+      setIsAdd(type, index) {
+        if (type == 'add') {
+          this.fileList[index].isAdd = true
+        } else if (type === 'delete') {
+          this.fileList[index].isAdd = false
+        } else if (type === 'only') {
+          this.pageList.forEach((list) => {
+            if (list && list.length) {
+              list.forEach((i) => {
+                i.isAdd = false
+              })
+            }
+          })
+          this.fileList[index].isAdd = true
+        }
       },
       async handleUpload() {
         const result = await window.electronApi.openDialog({
@@ -301,7 +310,6 @@
           }
           query.type = this.type
         }
-        console.log(path, this.$store.state.resourceList)
         this.toPage(path, query)
       },
     },

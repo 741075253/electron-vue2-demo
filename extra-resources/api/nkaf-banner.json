@@ -1,18 +1,10 @@
 [
   {
-    "id": 0,
-    "fileName": "图片",
+    "id": 4,
+    "fileName": "在线订房详情1",
     "isAdd": false,
-    "file": "图片.docx",
-    "path": "E:\\workspace\\bocom-admin\\extra-resources\\nkaf\\file/图片.docx",
-    "type": "file"
-  },
-  {
-    "id": 2,
-    "fileName": "测试",
-    "isAdd": false,
-    "file": "测试.pptx",
-    "path": "E:\\workspace\\bocom-admin\\extra-resources\\nkaf\\file/测试.pptx",
-    "type": "file"
+    "file": "在线订房详情1.jpg",
+    "path": "E:\\workspace\\bocom-admin\\extra-resources\\nkaf\\img/在线订房详情1.jpg",
+    "type": "img"
   }
 ]

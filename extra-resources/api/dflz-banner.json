@@ -1,14 +1,10 @@
 [
   {
-    "id": 0,
-    "imgUrl": "E:\\workspace\\bocom-admin\\extra-resources\\dflz\\posters\\1.mp4.jpg",
-    "file": "1.mp4",
-    "fileName": "1",
+    "id": 3,
+    "fileName": "OA详情1",
     "isAdd": false,
-    "path": "E:\\workspace\\bocom-admin\\extra-resources\\dflz\\video\\1.mp4",
-    "name": "1",
-    "duration": "00:52",
-    "current": 0,
-    "type": "video"
+    "file": "OA详情1.jpg",
+    "path": "E:\\workspace\\bocom-admin\\extra-resources\\dflz\\img/OA详情1.jpg",
+    "type": "img"
   }
 ]
