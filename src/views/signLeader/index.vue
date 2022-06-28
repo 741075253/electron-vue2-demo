@@ -103,12 +103,12 @@
     background: transparent;
   }
   .btn-1 {
-    right: 15%;
+    right: 44.7%;
   }
   .btn-2 {
-    right: 2%;
+    right: 31.8%;
   }
   .btn-3 {
-    right: 28.5%;
+    right: 58.2%;
   }
 </style>

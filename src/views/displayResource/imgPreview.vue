@@ -1,15 +1,15 @@
 <template>
   <div class="img">
-    <el-button
-      type="primary"
+    <div
+      class="back-btn"
       @click="
         toPage('/home', {
           index: 1,
         })
       "
     >
-      返回
-    </el-button>
+      <i class="iconfont icon-backward"></i>
+    </div>
     <swiper :options="swiperOption" ref="swiper">
       <swiper-slide v-for="(src, index) in resourceList" :key="index">
         <img :src="src.path" />
@@ -63,6 +63,17 @@
   }
 </script>
 <style scoped lang="scss">
+  .swiper-container::v-deep {
+    .swiper-slide {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      & > img {
+        display: block;
+        width: 100%;
+      }
+    }
+  }
   .img {
     position: relative;
   }
