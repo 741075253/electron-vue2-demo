@@ -131,6 +131,7 @@
         const baseUrl = window.electronApi.getUrl(this.dirUrl)
         window.electronApi.getDir(this.dirUrl).then((files) => {
           this.loading = false
+          console.log('总图片', files)
           if (files) {
             const pageList = files.map((file, index) => {
               const isAdd = this.bannerOriginList.some(
@@ -152,6 +153,7 @@
       },
       getPageData() {
         this.fileList = this.pageList[this.currentPage - 1]
+        console.log('分页图片', this.fileList)
       },
       addBanner(file, type = 'add', index) {
         const url = this.apiUrl

@@ -133,6 +133,7 @@
         this.loading = true
         window.electronApi.getDir(this.dirUrl).then(async (files) => {
           this.loading = false
+          console.log('总视频', files)
           if (files) {
             const pageList = []
             for (let i = 0; i < files.length; i++) {
@@ -167,6 +168,7 @@
       },
       getPageData() {
         this.fileList = this.pageList[this.currentPage - 1]
+        console.log('分页视频', this.fileList)
       },
       addBanner(file, type = 'add', index) {
         const url = this.apiUrl

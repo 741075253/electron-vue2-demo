@@ -140,6 +140,7 @@
         const baseUrl = window.electronApi.getUrl(this.dirUrl)
         window.electronApi.getDir(this.dirUrl).then((files) => {
           this.loading = false
+          console.log('总文件', files)
           if (files) {
             const pageList = files.map((file, index) => {
               const list = file.split('.')
@@ -165,6 +166,7 @@
       },
       getPageData() {
         this.fileList = this.pageList[this.currentPage - 1]
+        console.log('分页文件', this.pageList)
       },
       addBanner(files, type = 'add', index) {
         const file = { ...files }

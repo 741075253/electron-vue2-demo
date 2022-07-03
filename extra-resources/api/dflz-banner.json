@@ -1,10 +1,14 @@
 [
   {
-    "id": 3,
-    "fileName": "OA详情1",
+    "id": 2,
+    "imgUrl": "E:\\workspace\\bocom-admin\\extra-resources\\dflz\\posters\\江阴华西支行.mp4.jpg",
+    "file": "江阴华西支行.mp4",
+    "fileName": "江阴华西支行",
     "isAdd": false,
-    "file": "OA详情1.jpg",
-    "path": "E:\\workspace\\bocom-admin\\extra-resources\\dflz\\img/OA详情1.jpg",
-    "type": "img"
+    "path": "E:\\workspace\\bocom-admin\\extra-resources\\dflz\\video\\江阴华西支行.mp4",
+    "name": "江阴华西支行",
+    "duration": "00:58",
+    "current": 0,
+    "type": "video"
   }
 ]

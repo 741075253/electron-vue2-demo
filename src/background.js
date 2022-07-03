@@ -80,10 +80,33 @@ app.on('ready', async () => {
   ipcMain.on('setFullScreen', (event) => {
     const webContents = event.sender
     const win = BrowserWindow.fromWebContents(webContents)
-    win.setFullScreen(!win.isFullScreen())
+    const isFull = win.isFullScreen()
+    win.setFullScreen(!isFull)
+    Menu.setApplicationMenu(isFull ? createMenu(win) : null)
   })
   createWindow()
 })
+
+function createMenu(win) {
+  const template = [
+    {
+      label: '工具',
+      submenu: [
+        {
+          label: '开发者工具',
+
+          accelerator: 'ctrl+shift+m',
+
+          click: function () {
+            win.webContents.openDevTools()
+          },
+        },
+      ],
+    },
+  ]
+  const menu = Menu.buildFromTemplate(template)
+  return menu
+}
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
