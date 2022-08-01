@@ -12,9 +12,18 @@
       <i class="iconfont icon-backward"></i>
     </div>
     <div class="img-btn">
-      <img src="@/assets/images/img-icon.png" @click="handleClick('img')" />
-      <img src="@/assets/images/file-icon.png" @click="handleClick('file')" />
-      <img src="@/assets/images/video-icon.png" @click="handleClick('video')" />
+      <div class="img" @click="handleClick('img')">
+        <img src="@/assets/images/img-icon.png" />
+        <p>图片</p>
+      </div>
+      <div class="img" @click="handleClick('video')">
+        <img src="@/assets/images/video-icon.png" />
+        <p>视频</p>
+      </div>
+      <div class="img" @click="handleClick('file')">
+        <img src="@/assets/images/file-icon.png" />
+        <p>文档</p>
+      </div>
     </div>
   </div>
 </template>
@@ -57,11 +66,24 @@
     top: 35%;
     display: flex;
     justify-content: center;
-    img {
-      width: 16%;
-      cursor: pointer;
-      & + img {
+    .img {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      & + .img {
         margin-left: 5%;
+      }
+      img {
+        width: 100%;
+        cursor: pointer;
+      }
+      p {
+        margin-top: 20px;
+        font-size: 24px;
+        font-weight: 600;
+        color: red;
+        text-align: center;
+        line-height: 20px;
       }
     }
   }
