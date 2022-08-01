@@ -154,42 +154,47 @@
         })
       },
       handleResourceClick(name) {
-        const { type, list } = this.resource[name]
-        if (!list.length) {
-          this.$alert('没有轮播展示！', '提示')
-          return
-        }
-        this.$store.commit('setResourceList', list)
-        let path = ''
-        let query = {}
-        if (type === 'img') {
-          path = '/displayResource/imgPreview'
-        } else if (type === 'video') {
-          path = '/displayResource/videoPreviewList'
-          if (list.length === 1) {
-            path = '/displayResource/videoPreview'
-            query = {
-              url: list[0].path,
-              poster: list[0].imgUrl,
-            }
-          }
-          query.type = name
-        } else if (type === 'file') {
-          path = '/displayResource/filePreviewList'
-          if (list.length === 1) {
-            path = '/displayResource/filePreview'
-            query = {
-              url: list[0].path,
-            }
-          }
-          query.type = name
-        }
-        console.log(path, this.$store.state.resourceList)
-        this.toPage(path, query)
+        this.toPage('/displayResource', {
+          type: name,
+        })
       },
+      // handleResourceClick(name) {
+      //   const { type, list } = this.resource[name]
+      //   if (!list.length) {
+      //     this.$alert('没有轮播展示！', '提示')
+      //     return
+      //   }
+      //   this.$store.commit('setResourceList', list)
+      //   let path = ''
+      //   let query = {}
+      //   if (type === 'img') {
+      //     path = '/displayResource/imgPreview'
+      //   } else if (type === 'video') {
+      //     path = '/displayResource/videoPreviewList'
+      //     if (list.length === 1) {
+      //       path = '/displayResource/videoPreview'
+      //       query = {
+      //         url: list[0].path,
+      //         poster: list[0].imgUrl,
+      //       }
+      //     }
+      //     query.type = name
+      //   } else if (type === 'file') {
+      //     path = '/displayResource/filePreviewList'
+      //     if (list.length === 1) {
+      //       path = '/displayResource/filePreview'
+      //       query = {
+      //         url: list[0].path,
+      //       }
+      //     }
+      //     query.type = name
+      //   }
+      //   console.log(path, this.$store.state.resourceList)
+      //   this.toPage(path, query)
+      // },
     },
     mounted() {
-      this.getResource()
+      // this.getResource()
     },
     beforeDestroy() {
       this.swiper.destroy()

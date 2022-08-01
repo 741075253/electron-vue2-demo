@@ -4,37 +4,22 @@
     <div class="back-btn" @click="$router.back()">
       <i class="iconfont icon-backward"></i>
     </div>
-    <div class="list-cells">
+    <div class="list-cells" v-loading="loading">
       <div
         class="list-cell"
         v-for="item in fileList"
         :key="item.id"
-        @click="
-          toPage('/displayResource/videoPreview', {
-            url: item.path,
-            poster: item.imgUrl,
-          })
-        "
+        @click="handelClick"
       >
-        <div class="video-container">
-          <img :src="item.imgUrl" />
-          <p class="time">{{ item.duration }}</p>
-          <div class="video-btn">
-            <img src="@/assets/images/video-btn.png" />
-          </div>
+        <div class="img-container">
+          <img :src="item.path" />
         </div>
         <p class="title">{{ item.fileName }}</p>
       </div>
     </div>
     <div class="page">
       <div>
-        <el-button
-          type="primary"
-          style="margin-left: 15px"
-          @click="handleUpload"
-        >
-          上传
-        </el-button>
+        <el-button type="primary" @click="handleUpload">上传</el-button>
       </div>
       <div>
         <el-button
@@ -46,6 +31,7 @@
         </el-button>
         <el-button
           type="primary"
+          style="margin-left: 15px"
           v-if="currentPage < pageCount"
           @click="handleCurrentChange(currentPage + 1)"
         >
@@ -56,7 +42,7 @@
   </div>
 </template>
 <script>
-  import { getFileName, parserPageList, getVideoInfo } from '@/utils/common'
+  import { getFileName, parserPageList } from '@/utils/common'
   import { typeOpt } from '@/views/managePage/util'
   import DFLZ from '@/assets/images/dflz-bg.png'
   import NKAF from '@/assets/images/nkaf-bg.png'
@@ -73,47 +59,43 @@
         currentPage: 1,
         fileList: [], // 分页数据
         pageList: [], // 分页总数据
+        totalList: [],
       }
     },
     computed: {
       bgUrl() {
-        return this.$route.query.type == 2 ? NKAF : DFLZ
+        return this.type == 2 ? NKAF : DFLZ
       },
       pageCount() {
         return Math.ceil(this.total / 6)
       },
     },
     methods: {
+      handelClick() {
+        this.$store.commit('setResourceList', this.totalList)
+        this.toPage('/displayResource/imgPreview', {
+          type: this.$route.query.type,
+        })
+      },
       handleCurrentChange(pageIndex) {
         this.currentPage = pageIndex
         this.getPageData()
       },
       getList() {
         this.loading = true
-        window.electronApi.getDir(this.dirUrl).then(async (files) => {
+        const baseUrl = window.electronApi.getUrl(this.dirUrl)
+        window.electronApi.getDir(this.dirUrl).then((files) => {
           this.loading = false
           if (files) {
-            const pageList = []
-            for (let i = 0; i < files.length; i++) {
-              const file = files[i]
-              const fileName = getFileName(file)
-              const url = window.electronApi.getUrl(this.dirUrl + '/' + file)
-              let imgUrl = ''
-              const data = await getVideoInfo(fileName, url)
-              imgUrl = window.electronApi.saveBase64Poster(
-                data.poster,
+            const pageList = files.map((file, index) => {
+              return {
+                id: index,
+                fileName: getFileName(file),
                 file,
-                this.posterUrl
-              )
-              delete data.poster
-              pageList.push({
-                id: i,
-                imgUrl,
-                file,
-                fileName,
-                ...data,
-              })
-            }
+                path: baseUrl + '/' + file,
+              }
+            })
+            this.totalList = [...pageList]
             this.total = files.length
             this.pageList = parserPageList(pageList)
             this.getPageData()
@@ -128,8 +110,8 @@
           properties: ['openFile', 'multiSelections'],
           filters: [
             {
-              name: 'Movies',
-              extensions: ['mp4'],
+              name: 'Images',
+              extensions: ['jpg', 'png', 'jpeg', 'gif'],
             },
           ],
         })
@@ -180,7 +162,7 @@
     mounted() {
       this.type = this.$route.query.type
       const typeObj = typeOpt[this.type || '1']
-      this.dirUrl = './' + typeObj.dirName + '/video'
+      this.dirUrl = './' + typeObj.dirName + '/img'
       this.getList()
     },
   }

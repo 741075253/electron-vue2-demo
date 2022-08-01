@@ -1,104 +1,68 @@
 <template>
-  <div class="manage">
-    <el-container>
-      <el-header>
-        <el-button class="back-btn" type="text" @click="toPage('/')">
-          <i class="el-icon-arrow-left"></i>
-          返回
-        </el-button>
-        <div class="title">资源中心</div>
-      </el-header>
-      <el-main>
-        <HelloWorld msg="Welcome to Your Vue.js App" />
-      </el-main>
-    </el-container>
+  <div class="list-container">
+    <img :src="bgUrl" class="bg" />
+    <div
+      class="back-btn"
+      @click="
+        toPage('/home', {
+          index: 1,
+        })
+      "
+    >
+      <i class="iconfont icon-backward"></i>
+    </div>
+    <div class="img-btn">
+      <img src="@/assets/images/img-icon.png" @click="handleClick('img')" />
+      <img src="@/assets/images/file-icon.png" @click="handleClick('file')" />
+      <img src="@/assets/images/video-icon.png" @click="handleClick('video')" />
+    </div>
   </div>
 </template>
-
 <script>
-  import HelloWorld from '@/components/HelloWorld.vue'
+  import common from '@/mixins/common'
+  import DFLZ from '@/assets/images/dflz-bg.png'
+  import NKAF from '@/assets/images/nkaf-bg.png'
   export default {
-    name: 'displayResource',
-    components: {
-      HelloWorld,
-    },
+    name: 'videoPreviewList',
+    mixins: [common],
     data() {
-      return {
-        pageName: 'VideoManage',
-      }
+      return {}
     },
-    methods: {
-      toPage(path) {
-        console.log(path)
-        this.$router.push({
-          path,
-        })
+    computed: {
+      bgUrl() {
+        return this.$route.query.type == 2 ? NKAF : DFLZ
       },
     },
-    mounted() {
-      // this.getData()
+    methods: {
+      handleClick(type) {
+        let path = ''
+        if (type == 'img') {
+          path = '/displayResource/imgPreviewList'
+        } else if (type === 'file') {
+          path = '/displayResource/filePreviewList'
+        } else {
+          path = '/displayResource/videoPreviewList'
+        }
+        this.toPage(path, {
+          type: this.$route.query.type,
+        })
+      },
     },
   }
 </script>
 <style scoped lang="scss">
-  .manage {
-    padding: 0 30px 30px;
-    text-align: center;
-  }
-  .el-header {
+  @import url('./style.scss');
+  .img-btn {
     position: relative;
-    padding: 0;
-    height: 80px !important;
-    line-height: 80px;
-    .back-btn {
-      position: absolute;
-      left: 0;
-      top: 20px;
-      height: 40px;
-      width: 100px;
-      border-radius: 2px;
-      color: white;
-      font-weight: bold;
-      font-size: 20px;
-      text-align: left;
-    }
-    .title {
-      font-size: 40px;
-      font-weight: bolder;
-      margin-bottom: 10px;
-    }
-  }
-  .manage-container {
-    margin-top: 10px;
-  }
-  .menu {
-    .menu-cell {
-      width: 100px;
-      height: 40px;
-      line-height: 40px;
-      border-radius: 2px;
-      background: white;
-      color: #396ced;
-      font-weight: bold;
-      font-size: 16px;
+    top: 35%;
+    display: flex;
+    justify-content: center;
+    img {
+      width: 16%;
       cursor: pointer;
-      &[level='2'] {
-        margin-left: 20px;
-      }
-      &.active {
-        background: #e6e6e6;
-      }
-      & + .menu-cell {
-        margin-top: 15px;
+      & + img {
+        margin-left: 5%;
       }
     }
-    & + .menu {
-      margin-top: 30px;
-    }
-  }
-  .el-main {
-    width: calc(100vw - 200px);
-    height: calc(100vh - 120px);
-    background-color: white;
   }
 </style>

@@ -25,16 +25,32 @@ const routes = [
         /* webpackChunkName: "display" */ '../views/displayCompany/index.vue'
       ),
   },
+  // {
+  //   path: '/displayResource',
+  //   name: 'displayResource',
+  // },
   {
     path: '/displayResource',
     name: 'displayResource',
+    component: () =>
+      import(
+        /* webpackChunkName: "display" */ '../views/displayResource/index.vue'
+      ),
   },
   {
     path: '/displayResource/imgPreview',
     name: 'imgPreview',
     component: () =>
       import(
-        /* webpackChunkName: "sign" */ '../views/displayResource/imgPreview.vue'
+        /* webpackChunkName: "sign" */ '../views/displayResource/imgPreview/index.vue'
+      ),
+  },
+  {
+    path: '/displayResource/imgPreviewList',
+    name: 'imgPreviewList',
+    component: () =>
+      import(
+        /* webpackChunkName: "sign" */ '../views/displayResource/imgPreview/list.vue'
       ),
   },
   {

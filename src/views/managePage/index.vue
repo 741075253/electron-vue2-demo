@@ -35,71 +35,6 @@
               </template>
             </el-submenu>
           </el-menu>
-          <!-- <div class="menu">
-            <div class="menu-cell">党建资源管理</div>
-            <div class="menu">
-              <div
-                class="menu-cell"
-                :class="{ active: code === 1 }"
-                @click="changePage('VideoManage', 1, '1')"
-              >
-                视频管理
-              </div>
-              <div
-                class="menu-cell"
-                :class="{ active: code === 2 }"
-                @click="changePage('ImgManage', 2, '1')"
-              >
-                图片管理
-              </div>
-              <div
-                class="menu-cell"
-                :class="{ active: code === 3 }"
-                @click="changePage('FileManage', 3, '1')"
-              >
-                文件管理
-              </div>
-            </div>
-          </div>
-          <div class="menu">
-            <div class="menu-cell">内控资源管理</div>
-            <div class="menu">
-              <div
-                class="menu-cell"
-                :class="{ active: code === 4 }"
-                @click="changePage('VideoManage', 4, '2')"
-              >
-                视频管理
-              </div>
-              <div
-                class="menu-cell"
-                :class="{ active: code === 5 }"
-                @click="changePage('ImgManage', 5, '2')"
-              >
-                图片管理
-              </div>
-              <div
-                class="menu-cell"
-                :class="{ active: code === 6 }"
-                @click="changePage('FileManage', 6, '2')"
-              >
-                文件管理
-              </div>
-            </div>
-          </div>
-          <div class="menu">
-            <div class="menu-cell">电子签名</div>
-            <div class="menu">
-              <div
-                class="menu-cell"
-                :class="{ active: code === 7 }"
-                level="2"
-                @click="changePage('SignManage', 7)"
-              >
-                签名管理
-              </div>
-            </div>
-          </div> -->
         </el-aside>
         <el-main>
           <component v-bind:is="pageName" :type="type"></component>
@@ -111,56 +46,56 @@
 
 <script>
   const menuData = [
-    {
-      label: '党建管理',
-      value: '1',
-      icon: 'iconfont icon-dangjian_dangzhangdanggui',
-      children: [
-        {
-          label: '视频管理',
-          value: '1-1',
-          component: 'VideoManage',
-          type: '1',
-        },
-        {
-          label: '图片管理',
-          value: '1-2',
-          component: 'ImgManage',
-          type: '1',
-        },
-        {
-          label: '文件管理',
-          value: '1-3',
-          component: 'FileManage',
-          type: '1',
-        },
-      ],
-    },
-    {
-      label: '内控管理',
-      value: '2',
-      icon: 'iconfont icon-minganfangkong',
-      children: [
-        {
-          label: '视频管理',
-          value: '2-1',
-          component: 'VideoManage',
-          type: '2',
-        },
-        {
-          label: '图片管理',
-          value: '2-2',
-          component: 'ImgManage',
-          type: '2',
-        },
-        {
-          label: '文件管理',
-          value: '2-3',
-          component: 'FileManage',
-          type: '2',
-        },
-      ],
-    },
+    // {
+    //   label: '党建管理',
+    //   value: '1',
+    //   icon: 'iconfont icon-dangjian_dangzhangdanggui',
+    //   children: [
+    //     {
+    //       label: '视频管理',
+    //       value: '1-1',
+    //       component: 'VideoManage',
+    //       type: '1',
+    //     },
+    //     {
+    //       label: '图片管理',
+    //       value: '1-2',
+    //       component: 'ImgManage',
+    //       type: '1',
+    //     },
+    //     {
+    //       label: '文件管理',
+    //       value: '1-3',
+    //       component: 'FileManage',
+    //       type: '1',
+    //     },
+    //   ],
+    // },
+    // {
+    //   label: '内控管理',
+    //   value: '2',
+    //   icon: 'iconfont icon-minganfangkong',
+    //   children: [
+    //     {
+    //       label: '视频管理',
+    //       value: '2-1',
+    //       component: 'VideoManage',
+    //       type: '2',
+    //     },
+    //     {
+    //       label: '图片管理',
+    //       value: '2-2',
+    //       component: 'ImgManage',
+    //       type: '2',
+    //     },
+    //     {
+    //       label: '文件管理',
+    //       value: '2-3',
+    //       component: 'FileManage',
+    //       type: '2',
+    //     },
+    //   ],
+    // },
     {
       label: '签名管理',
       value: '3',
@@ -189,8 +124,8 @@
     data() {
       return {
         menuData: menuData,
-        pageName: 'VideoManage',
-        code: '1-1',
+        pageName: 'SignManage',
+        code: '3-1',
         type: '1', // 资源管理类型 1党建 2内控
       }
     },

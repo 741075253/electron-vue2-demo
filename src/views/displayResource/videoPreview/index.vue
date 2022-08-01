@@ -1,6 +1,6 @@
 <template>
   <div class="video">
-    <div class="back-btn" @click="toPage('/displayResource/videoPreviewList')">
+    <div class="back-btn" @click="$router.back()">
       <i class="iconfont icon-backward"></i>
     </div>
     <div id="mse"></div>

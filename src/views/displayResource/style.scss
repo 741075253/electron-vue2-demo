@@ -115,9 +115,10 @@
   right: 10%;
   bottom: 20%;
   z-index: 1;
+  width: 80%;
   text-align: right;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .banner-list {
